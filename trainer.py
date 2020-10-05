@@ -62,11 +62,14 @@ def train_classifiers(asp_program, fp_max, fn_max):
                 errors.append(i+j)
                 returned_results.append(new_result)
 
+            print("SOLUTIONS FOUND FOR: FP: ", i, " FN: ", j, " SUM:", i+j)
+
     # if no solutions were found
     if len(returned_results) == 0:
         print("NO SOLUTIONS FOUND")
 
     returned_results = converter.convert_asp_results(returned_results)
+
 
     return errors, returned_results
 
