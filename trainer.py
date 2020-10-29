@@ -1,7 +1,7 @@
 import classifier
 import feature_analyser
 import converter
-import pyasp
+from clyngor import solve
 import numpy
 import sys
 
@@ -9,9 +9,32 @@ import sys
 # class for result of ASP computation
 class Result:
 
+    """
+
+    Class representing an ASP Result.
+
+    Parameters
+    ----------
+    solutions_str : list
+        the list of all solutions belonging to the Result formatted as strings
+    solutions_by_gate : list
+        the list of all solutions belonging to the Result formatted as lists
+    errors : int
+        the list of total errors received for the Result
+    fp : int
+        the number of false positives received for the Result
+    fn : int
+        the number of false negatives received for the Result
+    size : int
+        the size of solutions in the Result
+
+    Methods
+    -------
+    """
+
     def __init__(self, solutions_str, solutions_by_gate, errors, fp, fn, size):
-        self.solutions_str = solutions_str  # solutions
-        self.solutions_by_gate = solutions_by_gate
+        self.solutions_str = solutions_str  # solutions as str
+        self.solutions_by_gate = solutions_by_gate  # solutions as lists
         self.errors = errors  # number of errors in total
         self.fp = fp  # number of FPs
         self.fn = fn  # number of FNs
@@ -20,6 +43,27 @@ class Result:
 
 # calculate balanced accuracy score
 def calculate_balanced_accuracy(tp, tn, p, n):
+
+    """
+    Calculates balanced accuracy (bacc = (tp/p + tn/n)/2).
+
+    Parameters
+    ----------
+    tp : int
+        number of true positives
+    tn : int
+        number of true negatives
+    p : int
+        number of positives
+    n : int
+        number of negatives
+
+    Returns
+    -------
+    float
+        balanced accuracy
+
+    """
 
     try:
         balanced_accuracy = (tp/p + tn/n)/2
@@ -31,50 +75,100 @@ def calculate_balanced_accuracy(tp, tn, p, n):
 
 
 # training classifiers according to asp_program and max values of false positives and false negatives
-def train_classifiers(asp_program, fp_max, fn_max):
+def train_classifiers(instance, program, fp_max, fn_max):
 
-    print("############TRAINING CLASSIFIERS############")
+    """
+    Trains classifiers according to constraints relaxation described in Becker et al. [1]_
+    using RnaCancerClassifier [2]_ and Clyngor [3]_.
 
-    # solver options
-    gringo_options = ''
-    clasp_options = '--opt-mode=optN --quiet=1'
-    solver = pyasp.Gringo4Clasp(gringo_options=gringo_options, clasp_options=clasp_options)  # run clasp
+    Parameters
+    ----------
+    instance : str
+        instance
+    program : str
+        ASP program
+    fp_max : int
+        number of max allowed false positive errors
+    fn_max : int
+        number of max allowed false negative errors
+
+    Returns
+    -------
+    float
+        balanced accuracy
+
+    References
+    ----------
+    .. [1] `Becker K, Klarner H, Nowicka M and Siebert H (2018) Designing miRNA-Based Synthetic Cell Classifier \
+    Circuits Using Answer Set Programming. Front. Bioeng. Biotechnol. 6:70. <10.3389/fbioe.2018.00070>`_
+    .. [2] `RnaCancerClassifier <https://github.com/MelaniaNowicka/RnaCancerClassifier>`_, RnaCancerClassifier \
+    source code.
+    .. [3] `Clyngor <https://github.com/Aluriak/clyngor>`_, Clyngor source code.
+    """
+
+    print("\n############TRAINING CLASSIFIERS############")
 
     returned_results = []
     errors = []
 
+    print("\nProgress...")
     # relax constraints (number of max allowed number of false positives and false negatives)
-    for i in range(0, fp_max+1):
-        for j in range(0, fn_max+1):
-            newfacts = pyasp.TermSet()  # create new TermSet
-            newterm_pos = pyasp.Term('upper_bound_falsepos', [i])  # add term "upper bound on false positives"
-            newterm_neg = pyasp.Term('upper_bound_falseneg', [j])  # add term "upper bound on false positives"
-            newfacts.add(newterm_pos)  # add terms as facts
-            newfacts.add(newterm_neg)
+    for i in range(0, fp_max+1):  # relax number of false positives
+        for j in range(0, fn_max+1):  # relax number of false negatives
 
-            # run solver
-            solutions = solver.run([asp_program, newfacts.to_file()], collapseTerms=True, collapseAtoms=False)
+            # create new constraints
+            constraints = "\n".join(["upper_bound_falsepos(" + str(i) + ").", "upper_bound_falseneg(" + str(j) + ")."])
+            asp_program = instance+constraints+program  # add constraints to the instance and the program
+            opt = '--opt-mode=optN'  # add clasp option - return all optimal models
+            answers = solve(inline=asp_program, options=opt)  # solve program
 
-            # if solutions were found
-            # one result may contain several solutions!
-            if len(solutions) != 0:
-                new_result = Result(solutions, [], i+j, i, j, 0)
-                errors.append(i+j)
-                returned_results.append(new_result)
+            #  '--quiet=1' option does not work with clyngor
+            #  answers.with_optimality returns information about optimality of answers
+            solutions = []
+            for answer in answers.with_optimality:
+                if answer[2] is True:  # if solution is optimal
+                    solutions.append(list(answer)[0])  # ad solutions to solution list
+
+            if len(solutions) != 0:  # if solutions were found
+                new_result = Result(solutions, [], i+j, i, j, 0)  # create new result
+                errors.append(i+j)  # add total number of errors to list of errors
+                returned_results.append(new_result)  # note, one result may contain several solutions!
                 print("SOLUTIONS FOUND FOR: FP: ", i, " FN: ", j, " SUM:", i + j)
+
+    print("\nCollecting answers finished.")
 
     # if no solutions were found
     if len(returned_results) == 0:
         print("NO SOLUTIONS FOUND")
 
+    # convert asp results to string and lists
     returned_results = converter.convert_asp_results(returned_results)
-
 
     return errors, returned_results
 
 
 # test solutions on testing data
-def test_classifiers(solution_list, test_data, train_p, train_n, test_p, test_n):
+def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
+
+    """
+    Tests classifiers on test data set.
+
+    Parameters
+    ----------
+    solutions : list
+        list of found solutions
+    test_data : str
+        test data set
+    train_p : int
+        number of positives in train data
+    train_n : int
+        number of negatives in train data
+    test_p : int
+        number of positives in test data
+    test_n : int
+        number of negatives in test data
+
+    """
 
     print("\n\n###########################################")
     print("############TESTING CLASSIFIERS############")
@@ -86,20 +180,20 @@ def test_classifiers(solution_list, test_data, train_p, train_n, test_p, test_n)
     size_list = []
 
     solution_id = 1
-    for solution in solution_list:
+    for solution in solutions:  # iterate over solutions
 
         # train data scores
         print("\nSOLUTION ", solution_id)
         solution_id += 1
-        print("##SUM: ", solution.errors, "##")
-        print("FP: ", solution.fp, "FN: ", solution.fn)
-        tp = train_p - solution.fn
-        tn = train_n - solution.fp
-        train_bacc = calculate_balanced_accuracy(tp, tn, train_p, train_n)  # calculate bacc
+        print("##SUM: ", solution.errors, "##")  # show number of errors
+        print("FP: ", solution.fp, "FN: ", solution.fn)  # show number of false positives and negatives
+        tp = train_p - solution.fn  # calculate number of true positives
+        tn = train_n - solution.fp  # calculate number of true negatives
+        train_bacc = calculate_balanced_accuracy(tp, tn, train_p, train_n)  # calculate train bacc
         print("TRAIN BACC: ", train_bacc)
         bacc_train_list.append(train_bacc)
-        size_list.append(solution.size)
-        print(solution.solutions_str)
+        size_list.append(solution.size)  # size of classifier in number of inputs
+        print(solution.solutions_str)  # show solution
 
         # test data scores
         # calculate false positives and negatives
@@ -113,28 +207,28 @@ def test_classifiers(solution_list, test_data, train_p, train_n, test_p, test_n)
         print("TEST BACC: ", bacc)
         bacc_test_list.append(bacc)
 
-    feature_analyser.rank_features_by_frequency(solution_list)
+    feature_analyser.rank_features_by_frequency(solutions)  # analyse features
 
     # average results for all solutions
     print("\n\n###################################")
     print("############AVG RESULTS############\n")
-    print("AVG TRAIN BACC: ", numpy.average(bacc_train_list))
-    if len(bacc_test_list) > 1:
+    print("AVG TRAIN BACC: ", numpy.average(bacc_train_list))  # calculate average train bacc
+    if len(bacc_test_list) > 1:  # if more than one solution was found
         train_std = numpy.std(bacc_train_list, ddof=1)
         print("STD TRAIN BACC: ", train_std)
     else:
         train_std = 0.0
         print("STD TRAIN BACC: ", 0.0)
-    print("AVG TEST BACC: ", numpy.average(bacc_test_list))
-    if len(bacc_test_list) > 1:
+    print("AVG TEST BACC: ", numpy.average(bacc_test_list))  # calculate average test bacc
+    if len(bacc_test_list) > 1:  # if more than one solution was found
         test_std = numpy.std(bacc_test_list, ddof=1)
         print("STD TEST BACC: ", test_std)
     else:
         test_std = 0.0
         print("STD TEST BACC: ", test_std)
-    print("TEST TPR: ", numpy.average(tpr_test_list))
-    print("TEST TNR: ", numpy.average(tnr_test_list))
-    print("AVG SIZE: ", numpy.average(size_list))
+    print("TEST TPR: ", numpy.average(tpr_test_list))  # calculate average tpr
+    print("TEST TNR: ", numpy.average(tnr_test_list))  # calculate average tnr
+    print("AVG SIZE: ", numpy.average(size_list))  # calculate average size
     print("\n")
     print("CSV", ";", numpy.average(bacc_train_list), ";", train_std, ";",
           numpy.average(bacc_test_list), ";", test_std, ";",

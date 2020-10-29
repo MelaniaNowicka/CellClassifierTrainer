@@ -1,6 +1,22 @@
 # convert asp solution to list of gates
 def convert_solution_to_list(inputs):
 
+    """
+
+    Converts a solution to a list of lists.
+
+    Parameters
+    ----------
+    inputs : list
+        list of classifier's inputs
+
+    Returns
+    ----------
+    list
+        solution as a list of lists
+
+    """
+
     new_gate = []
     new_solution = []
     gate_id = inputs[0][0]  # assign the first gate id
@@ -28,8 +44,31 @@ def convert_solution_to_list(inputs):
 # convert ASP results to strings and lists of gates
 def convert_asp_results(results):
 
+    """
+
+    Converts ASP answers to a lists of lists and string.
+
+    Format:
+
+    - list of lists: [[feature_id_1, sign_1], [feature_id_2, sign_2]], e.g., [[miR_1, positive], [miR_2, negative]]
+    - string: gate_input(gate_id, feature_id, sign) gate_input(gate_id, feature_id, sign), \
+    e.g., gate_input(1, miR_1, positive) gate_input(1, miR_2, negative)
+
+    Parameters
+    ----------
+    results : list
+        list containing results in a solver-returned format
+
+    Returns
+    ----------
+    list
+        formatted results
+
+    """
+
     size = 0
 
+    print("\nPRINTING RESULTS:")
     # iterate over found results
     for result in results:
         print("\n##SUM: ", result.errors, "##")  # total number of errors for solutions in result
@@ -45,7 +84,7 @@ def convert_asp_results(results):
             # iterate over atoms in solution (contains gate id, sign and feature id)
             input_list = []
             for atom in solution:
-                input_list.append(atom.args())
+                input_list.append([str(atom[1][0]), atom[1][1], atom[1][2]])
 
             # sort inputs by gate id and alphabetically
             input_list.sort(key=lambda inputs: (inputs[0], inputs))

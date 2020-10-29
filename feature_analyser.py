@@ -1,21 +1,32 @@
 def rank_features_by_frequency(solutions):
 
-    frequency_general = {}  # count occurences in total
-    frequency_pos = {}  # count occurences as positive inputs
-    frequency_neg = {}  # count occurences as negative inputs
+    """
+
+    Ranks the features in classifiers by frequency.
+
+    Parameters
+    ----------
+    solutions : list
+        list of solutions
+
+    """
+
+    frequency_general = {}  # count occurrences in total
+    frequency_pos = {}  # count occurrences as positive inputs
+    frequency_neg = {}  # count occurrences as negative inputs
 
     features_total = 0
     for solution in solutions:  # for all solutions
         for gate in solution.solutions_by_gate:
             for input in gate:
-                if input[1] == "positive":
+                if input[1] == "positive":  # count positive inputs
                     if input[0] not in frequency_pos.keys():
                         frequency_pos[input[0]] = 1
                         frequency_general[input[0]] = 1
                     else:
                         frequency_pos[input[0]] = frequency_pos[input[0]] + 1
                         frequency_general[input[0]] = frequency_general[input[0]] + 1
-                elif input[1] == "negative":
+                elif input[1] == "negative":  # count negative inputs
                     if input[0] not in frequency_neg.keys():
                         frequency_neg[input[0]] = 1
                         frequency_general[input[0]] = 1

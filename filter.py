@@ -2,12 +2,30 @@ import trainer
 
 
 # filter best performing solutions by total number of errors
-def filter_best_solutions(total_errors, solutions):
+def filter_best_solutions(errors, solutions):
+
+    """
+
+    Filters best solutions based on the total number of errors.
+
+    Parameters
+    ----------
+    errors : list
+        list of total numbers of errors for all results
+    solutions : list
+        list of solutions
+
+    Returns
+    -------
+    list
+        list of solutions
+
+    """
 
     print("\n\n##############################################")
     print("############FINDING BEST SOLUTIONS############")
     # find best solution ids by total number of errors
-    best_results_ids = [i for i, x in enumerate(total_errors) if x == min(total_errors)]
+    best_results_ids = [i for i, x in enumerate(errors) if x == min(errors)]
     best_results = [solutions[i] for i in best_results_ids]  # filter best solutions
 
     for result in best_results:  # result may contain several solutions for particular number of errors in total
@@ -32,16 +50,32 @@ def filter_best_solutions(total_errors, solutions):
 
 
 # find shortest solutions (by number of inputs) in list of solutions
-def filter_shortest_solutions(solution_list):
+def filter_shortest_solutions(solutions):
+
+    """
+
+    Filters solutions based on the size.
+
+    Parameters
+    ----------
+    solutions : list
+        list of solutions
+
+    Returns
+    -------
+    list
+        list of solutions
+
+    """
 
     # create a list of solution's sizes
-    size_list = [solution.size for solution in solution_list]
+    size_list = [solution.size for solution in solutions]
 
     print("\n\n###################################################")
     print("############FILTERING ACCORDING TO SIZE############")
     # find ids of shortest solutions and filter them
     shortest_solutions_ids = [i for i, x in enumerate(size_list) if x == min(size_list)]
-    shortest_solutions = [solution_list[i] for i in shortest_solutions_ids]  # filter shortest solutions by id
+    shortest_solutions = [solutions[i] for i in shortest_solutions_ids]  # filter shortest solutions by id
 
     for solution in shortest_solutions:  # show shortest solutions
         print("\n##SUM: ", solution.errors, "##")
@@ -52,17 +86,33 @@ def filter_shortest_solutions(solution_list):
 
 
 # remove symmetric solutions (that only differ in order of inputs and gates)
-def filter_symmetric_solutions(solution_list):
+def filter_symmetric_solutions(solutions):
+
+    """
+
+    Filters symmetric solutions.
+
+    Parameters
+    ----------
+    solutions : list
+        list of solutions
+
+    Returns
+    -------
+    list
+        list of solutions
+
+    """
 
     print("\n\n####################################################")
     print("############REMOVING SYMMETRIC SOLUTIONS############\n")
-    print("Number of solutions before filtering: ", len(solution_list))
+    print("Number of solutions before filtering: ", len(solutions))
     to_del = []  # list of ids of solutions to delete
-    for i in range(0, len(solution_list) - 1):
-        for j in range(i + 1, len(solution_list)):
+    for i in range(0, len(solutions) - 1):
+        for j in range(i + 1, len(solutions)):
             # check equality of sorted solutions
             # lists of gates and inputs are sorter alphabetically
-            if sorted(solution_list[i].solutions_by_gate) == sorted(solution_list[j].solutions_by_gate):
+            if sorted(solutions[i].solutions_by_gate) == sorted(solutions[j].solutions_by_gate):
                 to_del.append(j)  # add id of solution to delete
 
     to_del = list(set(to_del))  # remove repeating ids
@@ -70,13 +120,13 @@ def filter_symmetric_solutions(solution_list):
 
     # remove symmetrical solutions
     for id in to_del:
-        del solution_list[id]
+        del solutions[id]
 
-    print("Number of solutions after filtering: ", len(solution_list))
-    for solution in solution_list:  # show unique solutions
+    print("Number of solutions after filtering: ", len(solutions))
+    for solution in solutions:  # show unique solutions
         print("\n##SUM: ", solution.errors, "##")
         print("FP: ", solution.fp, "FN: ", solution.fn)
         print(solution.solutions_str)
 
-    return solution_list
+    return solutions
 
