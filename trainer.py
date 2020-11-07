@@ -104,6 +104,7 @@ def train_classifiers(instance, program, fp_max, fn_max):
     .. [2] `RnaCancerClassifier <https://github.com/MelaniaNowicka/RnaCancerClassifier>`_, RnaCancerClassifier \
     source code.
     .. [3] `Clyngor <https://github.com/Aluriak/clyngor>`_, Clyngor source code.
+
     """
 
     print("\n############TRAINING CLASSIFIERS############")
@@ -116,6 +117,7 @@ def train_classifiers(instance, program, fp_max, fn_max):
     for i in range(0, fp_max+1):  # relax number of false positives
         for j in range(0, fn_max+1):  # relax number of false negatives
 
+            print("Trying: FP: ", i, " FN: ", j, " SUM:", i + j)
             # create new constraints
             constraints = "\n".join(["upper_bound_falsepos(" + str(i) + ").", "upper_bound_falseneg(" + str(j) + ")."])
             asp_program = instance+constraints+program  # add constraints to the instance and the program
@@ -133,7 +135,9 @@ def train_classifiers(instance, program, fp_max, fn_max):
                 new_result = Result(solutions, [], i+j, i, j, 0)  # create new result
                 errors.append(i+j)  # add total number of errors to list of errors
                 returned_results.append(new_result)  # note, one result may contain several solutions!
-                print("SOLUTIONS FOUND FOR: FP: ", i, " FN: ", j, " SUM:", i + j)
+                print("Solutions found for: FP: ", i, " FN: ", j, " SUM:", i + j)
+
+
 
     print("\nCollecting answers finished.")
 
@@ -151,6 +155,7 @@ def train_classifiers(instance, program, fp_max, fn_max):
 def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
 
     """
+
     Tests classifiers on test data set.
 
     Parameters

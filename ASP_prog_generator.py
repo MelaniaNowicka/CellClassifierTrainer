@@ -53,21 +53,21 @@ def create_asp_prog(input, constraints):
     Constraints.get("PerfectClassifier")
 
     instance, program = classifier.csv2asp(FnameCSV,
-            FnameASP,
-            int(Constraints.get("LowerBoundInputs")),
-            int(Constraints.get("UpperBoundInputs")),
-            int(Constraints.get("LowerBoundGates")),
-            int(Constraints.get("UpperBoundGates")),
-            GateTypes,
-            int(Constraints.get("EfficiencyConstraint")),
-            int(Constraints.get("OptimizationStrategy")),
-            int(Constraints.get("BreakSymmetries")),
-            int(Constraints.get("Silent")),
-            int(Constraints.get("UniquenessConstraint")),
-            int(Constraints.get("PerfectClassifier")),
-            int(Constraints.get("AddBoundsOnErrors")),
-            int(Constraints.get("UpperBoundFalsePos")),
-            int(Constraints.get("UpperBoundFalseNeg")))
+                                           FnameASP,
+                                           int(Constraints.get("LowerBoundInputs")),
+                                           int(Constraints.get("UpperBoundInputs")),
+                                           int(Constraints.get("LowerBoundGates")),
+                                           int(Constraints.get("UpperBoundGates")),
+                                           GateTypes,
+                                           int(Constraints.get("EfficiencyConstraint")),
+                                           int(Constraints.get("OptimizationStrategy")),
+                                           int(Constraints.get("BreakSymmetries")),
+                                           int(Constraints.get("Silent")),
+                                           int(Constraints.get("UniquenessConstraint")),
+                                           int(Constraints.get("PerfectClassifier")),
+                                           int(Constraints.get("AddBoundsOnErrors")),
+                                           int(Constraints.get("UpperBoundFalsePos")),
+                                           int(Constraints.get("UpperBoundFalseNeg")))
 
     instance = "\n".join(instance)
     program = "\n".join(program)
