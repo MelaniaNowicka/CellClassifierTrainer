@@ -137,8 +137,6 @@ def train_classifiers(instance, program, fp_max, fn_max):
                 returned_results.append(new_result)  # note, one result may contain several solutions!
                 print("Solutions found for: FP: ", i, " FN: ", j, " SUM:", i + j)
 
-
-
     print("\nCollecting answers finished.")
 
     # if no solutions were found
