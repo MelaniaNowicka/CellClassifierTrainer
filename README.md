@@ -27,12 +27,18 @@ CellClassifierTrainer creates an ASP program (.asp) and prints a log (exemplary 
 Log sections:
 
 **RNA CANCER CLASSIFIER OUTPUT** - includes output information returned by RnaCancerClassifier
+
 **TRAINING CLASSIFIERS** - shows progress in classifier training
+
 **FINDING BEST SOLUTIONS** - filters best solutions according to the total number of errors
+
 **FILTERING ACCORDING TO SIZE** - filters best solutions according to the size (total number of inputs)
+
 **REMOVING SYMMETRIC SOLUTIONS** - filters symmetric solutions (copies of identical solutions differing only in 
 the order of inputs and gates)
+
 **TESTING CLASSIFIERS** - evaluates best classifier's performance on test data set including feature frequency analysis
+
 **AVERAGE RESULTS** - average results for best classifiers
 
 
