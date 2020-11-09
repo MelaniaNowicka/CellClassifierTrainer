@@ -71,27 +71,27 @@ Run exemplary training with a command::
 
 Parameters description:
 
-***- - train_data*** - path to training data set (.csv, obligatory)
+***-- train_data*** - path to training data set (.csv, obligatory)
 
-***- - constr*** - path to ASP program constraints (.csv, explained in the next section, obligatory)
+***-- constr*** - path to ASP program constraints (.csv, explained in the next section, obligatory)
 
-***- - test_data*** - path to test data set (.csv, default None)
+***-- test_data*** - path to test data set (.csv, default None)
 
-***- - train_p*** - number of positive samples in training data set (int, obligatory)
+***-- train_p*** - number of positive samples in training data set (int, obligatory)
 
-***- - train_n*** - number of negative samples in training data set (int, obligatory)
+***-- train_n*** - number of negative samples in training data set (int, obligatory)
 
-***- - test_p*** - number of positive samples in test data set (int, default None)
+***-- test_p*** - number of positive samples in test data set (int, default None)
 
-***- - test_n*** - number of negative samples in test data set (int, default None)
+***-- test_n*** - number of negative samples in test data set (int, default None)
 
-***- - min_fp*** - lower bound on allowed false positive errors (int, default 0)
+***-- min_fp*** - lower bound on allowed false positive errors (int, default 0)
 
-***- - min_fn*** - lower bound on allowed false negative errors (int, default 0)
+***-- min_fn*** - lower bound on allowed false negative errors (int, default 0)
 
-***- - max_fp*** - upper bound on allowed false positive errors (int, default 0)
+***-- max_fp*** - upper bound on allowed false positive errors (int, default 0)
 
-***- - max_fn*** - upper bound on allowed false negative errors (int, default 0)
+***-- max_fn*** - upper bound on allowed false negative errors (int, default 0)
 
 ## ASP constraints
 
