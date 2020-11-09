@@ -108,7 +108,9 @@ def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
 
     """
 
-    print("\n############TRAINING CLASSIFIERS############")
+    print("\n############################################")
+    print("############TRAINING CLASSIFIERS############")
+    print("############################################\n")
 
     returned_results = []
     errors = []
@@ -176,6 +178,7 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
 
     print("\n\n###########################################")
     print("############TESTING CLASSIFIERS############")
+    print("###########################################\n")
 
     bacc_train_list = []
     bacc_test_list = []
@@ -215,7 +218,8 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
 
     # average results for all solutions
     print("\n\n###################################")
-    print("############AVG RESULTS############\n")
+    print("############AVERAGE RESULTS############")
+    print("###################################\n")
     print("AVG TRAIN BACC: ", numpy.average(bacc_train_list))  # calculate average train bacc
     if len(bacc_test_list) > 1:  # if more than one solution was found
         train_std = numpy.std(bacc_train_list, ddof=1)

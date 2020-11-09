@@ -127,7 +127,9 @@ def csv2asp(fname_csv,
                                      4: "minimize number of gates"}
 
     if not silent:
-        print("####RNA CANCER CLASSIFIER OUTPUT####\n")
+        print("####################################")
+        print("####RNA CANCER CLASSIFIER OUTPUT####")
+        print("####################################\n")
         print("Input file:", fname_csv)
         print("Upper bound on inputs:", upper_bound_inputs)
         print("Upper bound on gates:", upper_bound_gates)

@@ -1,4 +1,4 @@
-# CellClassifierTrainer documentation
+# CellClassifierTrainer
 
 CellClassifierTrainer allows to train boolean classifiers based on a feature expression profile. The tool was created to
 classify cancerous and control healthy cells based on discretized miRNA differential expression profiles. Although,
@@ -23,6 +23,18 @@ The following columns include discretized miRNA profiles (use ';' as delimiter).
 ## Output
 
 CellClassifierTrainer creates an ASP program (.asp) and prints a log (exemplary log: example.log).
+
+Log sections:
+
+**RNA CANCER CLASSIFIER OUTPUT** - includes output information returned by RnaCancerClassifier
+**TRAINING CLASSIFIERS** - shows progress in classifier training
+**FINDING BEST SOLUTIONS** - filters best solutions according to the total number of errors
+**FILTERING ACCORDING TO SIZE** - filters best solutions according to the size (total number of inputs)
+**REMOVING SYMMETRIC SOLUTIONS** - filters symmetric solutions (copies of identical solutions differing only in 
+the order of inputs and gates)
+**TESTING CLASSIFIERS** - evaluates best classifier's performance on test data set including feature frequency analysis
+**AVERAGE RESULTS** - average results for best classifiers
+
 
 ## Requirements
 

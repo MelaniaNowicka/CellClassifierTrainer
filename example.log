@@ -1,4 +1,6 @@
+####################################
 ####RNA CANCER CLASSIFIER OUTPUT####
+####################################
 
 Input file: example_train.csv
 Upper bound on inputs: 10
@@ -22,9 +24,10 @@ miRNAs:  65
 samples: 160
 
 created: example_train.asp
-now run: gringo example_train.asp | clasp --opt-mode=optN --quiet=1
 
+############################################
 ############TRAINING CLASSIFIERS############
+############################################
 
 Progress...
 Trying: FP:  0  FN:  0  SUM: 0
@@ -69,6 +72,7 @@ gate_input(1,negative,g86)
 
 ##############################################
 ############FINDING BEST SOLUTIONS############
+##############################################
 
 ##SUM:  0 ##
 FP:  0 FN:  0
@@ -78,6 +82,7 @@ gate_input(1,positive,g34)
 
 ###################################################
 ############FILTERING ACCORDING TO SIZE############
+###################################################
 
 ##SUM:  0 ##
 FP:  0 FN:  0
@@ -86,6 +91,7 @@ gate_input(1,positive,g34)
 
 ####################################################
 ############REMOVING SYMMETRIC SOLUTIONS############
+####################################################
 
 Number of solutions before filtering:  1
 Number of solutions after filtering:  1
@@ -97,6 +103,7 @@ gate_input(1,positive,g34)
 
 ###########################################
 ############TESTING CLASSIFIERS############
+###########################################
 
 SOLUTION  1
 ##SUM:  0 ##
@@ -122,6 +129,7 @@ NEGATIVE FEATURES:
 
 ###################################
 ############AVG RESULTS############
+###################################
 
 AVG TRAIN BACC:  1.0
 STD TRAIN BACC:  0.0
