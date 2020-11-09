@@ -71,27 +71,27 @@ Run exemplary training with a command::
 
 Parameters description:
 
-**- - train_data** - path to training data set (.csv, obligatory)
+***- - train_data*** - path to training data set (.csv, obligatory)
 
-**- - constr** - path to ASP program constraints (.csv, explained in the next section, obligatory)
+***- - constr*** - path to ASP program constraints (.csv, explained in the next section, obligatory)
 
-**- - test_data** - path to test data set (.csv, default None)
+***- - test_data*** - path to test data set (.csv, default None)
 
-**- - train_p** - number of positive samples in training data set (int, obligatory)
+***- - train_p*** - number of positive samples in training data set (int, obligatory)
 
-**- - train_n** - number of negative samples in training data set (int, obligatory)
+***- - train_n*** - number of negative samples in training data set (int, obligatory)
 
-**- - test_p** - number of positive samples in test data set (int, default None)
+***- - test_p*** - number of positive samples in test data set (int, default None)
 
-**- - test_n** - number of negative samples in test data set (int, default None)
+***- - test_n*** - number of negative samples in test data set (int, default None)
 
-**- - min_fp** - lower bound on allowed false positive errors (int, default 0)
+***- - min_fp*** - lower bound on allowed false positive errors (int, default 0)
 
-**- - min_fn** - lower bound on allowed false negative errors (int, default 0)
+***- - min_fn*** - lower bound on allowed false negative errors (int, default 0)
 
-**- - max_fp** - upper bound on allowed false positive errors (int, default 0)
+***- - max_fp*** - upper bound on allowed false positive errors (int, default 0)
 
-**- - max_fn** - upper bound on allowed false negative errors (int, default 0)
+***- - max_fn*** - upper bound on allowed false negative errors (int, default 0)
 
 ## ASP constraints
 
@@ -99,44 +99,44 @@ ASP constraints are included in constr.csv file. Explanation of particular const
 (to know more see [RnaCancerClassifier](https://github.com/hklarner/RnaCancerClassifier)
 and [Becker et al.](https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full)):
 
-**LowerBoundInputs** - lower bound on number of inputs in classifier (int)
+***LowerBoundInputs*** - lower bound on number of inputs in classifier (int)
 
-**UpperBoundInputs** - upper bound on number of inputs in classifier (int)
+***UpperBoundInputs*** - upper bound on number of inputs in classifier (int)
 
-**LowerBoundGates** - lower bound on number of gates in classifier (int)
+***LowerBoundGates*** - lower bound on number of gates in classifier (int)
 
-**UpperBoundGates** - upper bound on number of gates in classifier (int)
+***UpperBoundGates*** - upper bound on number of gates in classifier (int)
 
-**EfficiencyConstraint** - if 1 ignore non-relevant features, otherwise 0
+***EfficiencyConstraint*** - if 1 ignore non-relevant features, otherwise 0
 
-**BreakSymmetries** - if 1 part of symmetric solutions are removed, otherwise 0
+***BreakSymmetries*** - if 1 part of symmetric solutions are removed, otherwise 0
 
-**Silent** - if 1 print all information, otherwise 0
+***Silent*** - if 1 print all information, otherwise 0
 
-**UniquenessConstraint** - if 1 inputs should be unique across the classifier, irrespective of whether they are negated or not, otherwise 0
+***UniquenessConstraint*** - if 1 inputs should be unique across the classifier, irrespective of whether they are negated or not, otherwise 0
 
-**OptimizationStrategy**
+***OptimizationStrategy***
 * 0 - no optimization
 * 1 - minimize number of inputs then minimize number of gates
 * 2 - minimize number of gates then minimize number of inputs
 * 3 - minimize number of inputs
 * 4 - minimize number of gates
 
-**PerfectClassifier** - if 1 look for perfect classifiers (no errors allowed), otherwise 0
+***PerfectClassifier*** - if 1 look for perfect classifiers (no errors allowed), otherwise 0
 
-**AddBoundsOnErrors** - if 1 add bounds on errors, otherwise 0
+***AddBoundsOnErrors*** - if 1 add bounds on errors, otherwise 0
 
-**UpperBoundFalsePos** - upper bound on false positive errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
+***UpperBoundFalsePos*** - upper bound on false positive errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
 
-**UpperBoundFalseNeg** - upper bound on false negative errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
+***UpperBoundFalseNeg*** - upper bound on false negative errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
 
-**GateTypeX_LowerBoundPos** - lower bound on positive inputs in gate type X (X - number of gate type (1, 2, 3...))
+***GateTypeX_LowerBoundPos*** - lower bound on positive inputs in gate type X (X - number of gate type (1, 2, 3...))
 
-**GateTypeX_UpperBoundPos** - upper bound on positive input in gate type X
+***GateTypeX_UpperBoundPos*** - upper bound on positive input in gate type X
 
-**GateTypeX_LowerBoundNeg** - lower bound on negative inputs in gate type X
+***GateTypeX_LowerBoundNeg*** - lower bound on negative inputs in gate type X
 
-**GateTypeX_UpperBoundNeg** - upper bound on negative input in gate type X
+***GateTypeX_UpperBoundNeg*** - upper bound on negative input in gate type X
 
-**GateTypeX_UpperBoundOcc** - upper bound on number of occurrences of gate type X
+***GateTypeX_UpperBoundOcc*** - upper bound on number of occurrences of gate type X
 
