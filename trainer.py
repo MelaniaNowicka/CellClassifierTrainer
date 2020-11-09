@@ -88,6 +88,10 @@ def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
         instance
     program : str
         ASP program
+    fp_min : int
+        number of min allowed false positive errors
+    fn_min : int
+        number of min allowed false positive errors
     fp_max : int
         number of max allowed false positive errors
     fn_max : int
