@@ -23,8 +23,6 @@ def arg_parser():
                                                  'RnaCancerClassifier(https://github.com/hklarner/RnaCancerClassifier).'
                                                  'Written by Melania Nowicka, FU Berlin, 2019.')
 
-    parser.add_argument('--asp_program', dest='asp_program', type=str, default=None,
-                        help='ASP program generated with RnaCancerClassifier.')
     parser.add_argument('--train_data', dest='train_data', type=str, default=None,
                         help='Training data set file.')
     parser.add_argument('--constr', dest='constr', type=str, default=None,
@@ -36,8 +34,10 @@ def arg_parser():
                         help='Number of positive samples in test data.')
     parser.add_argument('--test_n', dest='test_n', type=int, default=None,
                         help='Number of negative samples in test data.')
-    parser.add_argument('--fp', dest='fp_max', type=int, default=0, help='Upper bound on false positives.')
-    parser.add_argument('--fn', dest='fn_max', type=int, default=0, help='Upper bound on false negatives.')
+    parser.add_argument('--min_fp', dest='fp_min', type=int, default=0, help='Lower bound on false positives.')
+    parser.add_argument('--min_fn', dest='fn_min', type=int, default=0, help='Lower bound on false negatives.')
+    parser.add_argument('--max_fp', dest='fp_max', type=int, default=0, help='Upper bound on false positives.')
+    parser.add_argument('--max_fn', dest='fn_max', type=int, default=0, help='Upper bound on false negatives.')
 
     params = parser.parse_args()
 
@@ -55,22 +55,21 @@ def run_trainer():
 
     start_train = time.time()
 
-    params = arg_parser()
+    params = arg_parser()  # parse arguments
 
-    if params.asp_program is None and params.train_data is None:  # if no ASP program and no train data was given
-        print("ERROR: ASP program or train data set file not given.")
+    if params.train_data is None:  # if no train data is given
+        print("ERROR: Train data set file not given.")
         sys.exit(0)
     else:
-        if params.asp_program is None:  # if no ASP program was given
-            if params.constr is None:
-                print("ERROR: No constraints file was given.")
-                sys.exit(0)
-            else:
-                instance, program = \
-                    ASP_prog_generator.create_asp_prog(params.train_data, params.constr)  # generate ASP program
+        if params.constr is None:
+            print("ERROR: ASP constraints file not given.")
+            sys.exit(0)
         else:
-            asp_program = params.asp_program  # ASP program
+            instance, program = \
+                ASP_prog_generator.create_asp_prog(params.train_data, params.constr)  # generate ASP program
         test_data = params.test_data  # test data set
+        fp_min = params.fp_min  # lower bound on false positives allowed in training
+        fn_min = params.fn_min  # lower bound on false negatives allowed in training
         fp_max = params.fp_max  # upper bound on false positives allowed in training
         fn_max = params.fn_max  # upper bound on false negatives allowed in training
         train_positives = params.train_p  # number of positive samples in training data
@@ -79,7 +78,7 @@ def run_trainer():
         test_negatives = params.test_n  # number of negative samples in test data
 
         # train classifiers
-        errors, found_solutions = trainer.train_classifiers(instance, program, fp_max, fn_max)
+        errors, found_solutions = trainer.train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max)
         # filter best found solutions by total number of errors
         solution_list = filter.filter_best_solutions(errors, found_solutions)
         # filter shortest classifiers

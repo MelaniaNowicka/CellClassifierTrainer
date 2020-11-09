@@ -13,7 +13,7 @@ class Result:
 
     Class representing an ASP Result.
 
-    Parameters
+    Attributes
     ----------
     solutions_str : list
         the list of all solutions belonging to the Result formatted as strings
@@ -45,6 +45,7 @@ class Result:
 def calculate_balanced_accuracy(tp, tn, p, n):
 
     """
+
     Calculates balanced accuracy (bacc = (tp/p + tn/n)/2).
 
     Parameters
@@ -75,7 +76,7 @@ def calculate_balanced_accuracy(tp, tn, p, n):
 
 
 # training classifiers according to asp_program and max values of false positives and false negatives
-def train_classifiers(instance, program, fp_max, fn_max):
+def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
 
     """
     Trains classifiers according to constraints relaxation described in Becker et al. [1]_
@@ -114,8 +115,8 @@ def train_classifiers(instance, program, fp_max, fn_max):
 
     print("\nProgress...")
     # relax constraints (number of max allowed number of false positives and false negatives)
-    for i in range(0, fp_max+1):  # relax number of false positives
-        for j in range(0, fn_max+1):  # relax number of false negatives
+    for i in range(fp_min, fp_max+1):  # relax number of false positives
+        for j in range(fn_min, fn_max+1):  # relax number of false negatives
 
             print("Trying: FP: ", i, " FN: ", j, " SUM:", i + j)
             # create new constraints
