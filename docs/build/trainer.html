@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>trainer module &mdash; CellClassifierTrainer  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="test_training module" href="test_training.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> CellClassifierTrainer
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Code documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">CellClassifierTrainer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ASP_prog_generator.html">ASP_prog_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asp_py_lextab.html">asp_py_lextab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asp_py_parsetab.html">asp_py_parsetab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classifier.html">classifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="converter.html">converter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_data.html">example_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_analyser.html">feature_analyser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter.html">filter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rule_optimizer.html">rule_optimizer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_trainer.html">run_trainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_training.html">test_training module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">trainer module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CellClassifierTrainer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">CellClassifierTrainer</a> &raquo;</li>
+        
+      <li>trainer module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/trainer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-trainer">
+<span id="trainer-module"></span><h1>trainer module<a class="headerlink" href="#module-trainer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="trainer.Result">
+<em class="property">class </em><code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">Result</code><span class="sig-paren">(</span><em class="sig-param">solutions_str</em>, <em class="sig-param">solutions_by_gate</em>, <em class="sig-param">errors</em>, <em class="sig-param">fp</em>, <em class="sig-param">fn</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.Result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing an ASP Result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solutions_str</strong> (<em>list</em>) – the list of all solutions belonging to the Result formatted as strings</p></li>
+<li><p><strong>solutions_by_gate</strong> (<em>list</em>) – the list of all solutions belonging to the Result formatted as lists</p></li>
+<li><p><strong>errors</strong> (<em>int</em>) – the list of total errors received for the Result</p></li>
+<li><p><strong>fp</strong> (<em>int</em>) – the number of false positives received for the Result</p></li>
+<li><p><strong>fn</strong> (<em>int</em>) – the number of false negatives received for the Result</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the size of solutions in the Result</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="trainer.calculate_balanced_accuracy">
+<code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">calculate_balanced_accuracy</code><span class="sig-paren">(</span><em class="sig-param">tp</em>, <em class="sig-param">tn</em>, <em class="sig-param">p</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.calculate_balanced_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates balanced accuracy (bacc = (tp/p + tn/n)/2).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tp</strong> (<em>int</em>) – number of true positives</p></li>
+<li><p><strong>tn</strong> (<em>int</em>) – number of true negatives</p></li>
+<li><p><strong>p</strong> (<em>int</em>) – number of positives</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of negatives</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>balanced accuracy</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="trainer.test_classifiers">
+<code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">test_classifiers</code><span class="sig-paren">(</span><em class="sig-param">solutions</em>, <em class="sig-param">test_data</em>, <em class="sig-param">train_p</em>, <em class="sig-param">train_n</em>, <em class="sig-param">test_p</em>, <em class="sig-param">test_n</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.test_classifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests classifiers on test data set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solutions</strong> (<em>list</em>) – list of found solutions</p></li>
+<li><p><strong>test_data</strong> (<em>str</em>) – test data set</p></li>
+<li><p><strong>train_p</strong> (<em>int</em>) – number of positives in train data</p></li>
+<li><p><strong>train_n</strong> (<em>int</em>) – number of negatives in train data</p></li>
+<li><p><strong>test_p</strong> (<em>int</em>) – number of positives in test data</p></li>
+<li><p><strong>test_n</strong> (<em>int</em>) – number of negatives in test data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="trainer.train_classifiers">
+<code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">train_classifiers</code><span class="sig-paren">(</span><em class="sig-param">instance</em>, <em class="sig-param">program</em>, <em class="sig-param">fp_max</em>, <em class="sig-param">fn_max</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.train_classifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains classifiers according to constraints relaxation described in Becker et al. <a class="footnote-reference brackets" href="#id4" id="id1">1</a>
+using RnaCancerClassifier <a class="footnote-reference brackets" href="#id5" id="id2">2</a> and Clyngor <a class="footnote-reference brackets" href="#id6" id="id3">3</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<em>str</em>) – instance</p></li>
+<li><p><strong>program</strong> (<em>str</em>) – ASP program</p></li>
+<li><p><strong>fp_max</strong> (<em>int</em>) – number of max allowed false positive errors</p></li>
+<li><p><strong>fn_max</strong> (<em>int</em>) – number of max allowed false negative errors</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>balanced accuracy</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference external" href="10.3389/fbioe.2018.00070">Becker K, Klarner H, Nowicka M and Siebert H (2018) Designing miRNA-Based Synthetic Cell Classifier     Circuits Using Answer Set Programming. Front. Bioeng. Biotechnol. 6:70.</a></p>
+</dd>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/MelaniaNowicka/RnaCancerClassifier">RnaCancerClassifier</a>, RnaCancerClassifier     source code.</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/Aluriak/clyngor">Clyngor</a>, Clyngor source code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="test_training.html" class="btn btn-neutral float-left" title="test_training module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Melania Nowicka
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

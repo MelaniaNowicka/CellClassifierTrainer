@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>classifier module &mdash; CellClassifierTrainer  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="converter module" href="converter.html" />
+    <link rel="prev" title="asp_py_parsetab module" href="asp_py_parsetab.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> CellClassifierTrainer
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Code documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">CellClassifierTrainer</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ASP_prog_generator.html">ASP_prog_generator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asp_py_lextab.html">asp_py_lextab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asp_py_parsetab.html">asp_py_parsetab module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">classifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="converter.html">converter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_data.html">example_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_analyser.html">feature_analyser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter.html">filter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rule_optimizer.html">rule_optimizer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_trainer.html">run_trainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_training.html">test_training module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trainer.html">trainer module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CellClassifierTrainer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">CellClassifierTrainer</a> &raquo;</li>
+        
+      <li>classifier module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/classifier.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-classifier">
+<span id="classifier-module"></span><h1>classifier module<a class="headerlink" href="#module-classifier" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="classifier.check_classifier">
+<code class="sig-prename descclassname">classifier.</code><code class="sig-name descname">check_classifier</code><span class="sig-paren">(</span><em class="sig-param">fname_csv</em>, <em class="sig-param">gate_inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#classifier.check_classifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the number of false positive and negative errors of a classifier for a given data set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_csv</strong> (<em>int</em>) – number of true positives</p></li>
+<li><p><strong>gate_inputs</strong> (<em>int</em>) – number of true negatives</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>false_neg</strong> (<em>int</em>) – number of false negative errors</p></li>
+<li><p><strong>false_pos</strong> (<em>int</em>) – number of false positive errors</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="classifier.check_csv">
+<code class="sig-prename descclassname">classifier.</code><code class="sig-name descname">check_csv</code><span class="sig-paren">(</span><em class="sig-param">fname_csv</em><span class="sig-paren">)</span><a class="headerlink" href="#classifier.check_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts how many features are constant across all samples, and checks if there are inconsistencies in the data
+(identical feature profile but different annotation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname_csv</strong> (<em>str</em>) – name of input data file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="classifier.csv2asp">
+<code class="sig-prename descclassname">classifier.</code><code class="sig-name descname">csv2asp</code><span class="sig-paren">(</span><em class="sig-param">fname_csv</em>, <em class="sig-param">fname_asp</em>, <em class="sig-param">lower_bound_inputs</em>, <em class="sig-param">upper_bound_inputs</em>, <em class="sig-param">lower_bound_gates</em>, <em class="sig-param">upper_bound_gates</em>, <em class="sig-param">gate_types</em>, <em class="sig-param">efficiency_constraint</em>, <em class="sig-param">optimization_strategy</em>, <em class="sig-param">break_symmetries</em>, <em class="sig-param">silent</em>, <em class="sig-param">uniqueness_constraint</em>, <em class="sig-param">perfect_classifier</em>, <em class="sig-param">add_bounds_on_errors</em>, <em class="sig-param">upper_bound_false_pos</em>, <em class="sig-param">upper_bound_false_neg</em><span class="sig-paren">)</span><a class="headerlink" href="#classifier.csv2asp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts data and constraints to an ASP program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_csv</strong> (<em>str</em>) – name of input file</p></li>
+<li><p><strong>fname_asp</strong> (<em>str</em>) – name of output file</p></li>
+<li><p><strong>lower_bound_inputs</strong> (<em>int</em>) – lower bound on number of inputs in classifier</p></li>
+<li><p><strong>upper_bound_inputs</strong> (<em>int</em>) – upper bound on number of inputs in classifier</p></li>
+<li><p><strong>lower_bound_gates</strong> (<em>int</em>) – lower bound on number of gates in classifier</p></li>
+<li><p><strong>upper_bound_gates</strong> (<em>int</em>) – upper bound on number of gates in classifier</p></li>
+<li><p><strong>gate_types</strong> (<em>list</em>) – description of allowed gates</p></li>
+<li><p><strong>efficiency_constraint</strong> (<em>bool</em>) – if True ignore non-relevant features</p></li>
+<li><p><strong>optimization_strategy</strong> (<em>int</em>) – <ul>
+<li><p>0: no optimization</p></li>
+<li><p>1: minimize number of inputs then minimize number of gates</p></li>
+<li><p>2: minimize number of gates then minimize number of inputs</p></li>
+<li><p>3: minimize number of inputs</p></li>
+<li><p>4: minimize number of gates</p></li>
+</ul>
+</p></li>
+<li><p><strong>break_symmetries</strong> (<em>bool</em>) – if True part of symmetric solutions are removed</p></li>
+<li><p><strong>silent</strong> (<em>bool</em>) – printing option</p></li>
+<li><p><strong>bool</strong> (<em>uniqueness_constraint</em>) – if True inputs should be unique across the classifier, irrespective of whether they are negated or not</p></li>
+<li><p><strong>perfect_classifier</strong> (<em>bool</em>) – if True upper bound on false positive and negative errors are 0</p></li>
+<li><p><strong>add_bounds_on_errors</strong> (<em>bool</em>) – if True add bounds on errors</p></li>
+<li><p><strong>upper_bound_false_pos</strong> (<em>int</em>) – upper bound on false positive errors (needed if PerfectClassifier=False)</p></li>
+<li><p><strong>upper_bound_false_neg</strong> (<em>int</em>) – upper bound on false negative errors (needed if PerfectClassifier=False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>miRNAs</strong> (<em>list</em>) – names of features</p></li>
+<li><p><strong>rows</strong> (<em>list</em>) – data</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="classifier.csv2rows">
+<code class="sig-prename descclassname">classifier.</code><code class="sig-name descname">csv2rows</code><span class="sig-paren">(</span><em class="sig-param">FnameCSV</em><span class="sig-paren">)</span><a class="headerlink" href="#classifier.csv2rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a csv file to a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>FnameCSV</strong> (<em>str</em>) – name of input file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>miRNAs</strong> (<em>list</em>) – names of features</p></li>
+<li><p><strong>rows</strong> (<em>list</em>) – data</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="classifier.gateinputs2function">
+<code class="sig-prename descclassname">classifier.</code><code class="sig-name descname">gateinputs2function</code><span class="sig-paren">(</span><em class="sig-param">gate_inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#classifier.gateinputs2function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts gate_inputs to a function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gate_inputs</strong> (<em>str</em>) – number of true positives</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>gate_inputs as a function</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="converter.html" class="btn btn-neutral float-right" title="converter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="asp_py_parsetab.html" class="btn btn-neutral float-left" title="asp_py_parsetab module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Melania Nowicka
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

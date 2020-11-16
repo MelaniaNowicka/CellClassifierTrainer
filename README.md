@@ -11,7 +11,8 @@ relaxation-based optimization as described in Becker et al.
 ## Input data format
 
 First column (ID) must contain unique sample IDs , second (Annots) - the annotation of samples.
-The following columns include discretized miRNA profiles (use ';' as delimiter).
+The following columns include discretized miRNA profiles (use ';' as delimiter). Note, ASP does 
+not parse characters such as '-', ':', etc. Use only letters and numbers in the header. 
 
 | ID | Annots | miR1 | miR2 |
 | -- | ------ | ---- | ---- |
@@ -46,7 +47,7 @@ the order of inputs and gates)
 
 CellClassifierTrainer has the following dependencies:
 
-- Python 3.5
+- Python 3.5 (required to run clyngor)
 - scikit-learn
 - clyngor (https://anaconda.org/conda-forge/clyngor)
 
