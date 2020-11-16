@@ -11,14 +11,7 @@ CellClassifierTrainer documentation
    :caption: Contents:
 
    readme
-   ASP_prog_generator
-   classifier
-   converter
-   feature_analyser
-   filter
-   rule_optimizer
-   run_trainer
-   trainer
+   modules
 
 
 

@@ -36,7 +36,13 @@
 
     
     <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+<script type="text/javascript">
+  window.onload = function() {
+    document.body.innerHTML = document.body.innerHTML.replace(/ module/g, '');
+  }
+</script>
+
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,10 +87,10 @@
               
             
             
-              <p class="caption"><span class="caption-text">HOW TO:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">CellClassifierTrainer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how-to.html">How to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">CellClassifierTrainer documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Code documentation</a></li>
 </ul>
 
             
@@ -159,18 +165,23 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  
 </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="run_trainer.html#run_trainer.arg_parser">arg_parser() (in module run_trainer)</a>
+      <li><a href="rule_optimizer.html#rule_optimizer.arg_parser">arg_parser() (in module rule_optimizer)</a>
+
+      <ul>
+        <li><a href="run_trainer.html#run_trainer.arg_parser">(in module run_trainer)</a>
 </li>
-      <li><a href="ASP_prog_generator.html#module-ASP_prog_generator">ASP_prog_generator (module)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ASP_prog_generator.html#module-ASP_prog_generator">ASP_prog_generator (module)</a>
+</li>
       <li><a href="asp_py_lextab.html#module-asp_py_lextab">asp_py_lextab (module)</a>
 </li>
       <li><a href="asp_py_parsetab.html#module-asp_py_parsetab">asp_py_parsetab (module)</a>
@@ -215,6 +226,10 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="trainer.html#trainer.Result.errors">errors (trainer.Result attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="example_data.html#module-example_data">example_data (module)</a>
 </li>
   </ul></td>
@@ -227,13 +242,17 @@
 </li>
       <li><a href="filter.html#module-filter">filter (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="filter.html#filter.filter_best_solutions">filter_best_solutions() (in module filter)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="filter.html#filter.filter_shortest_solutions">filter_shortest_solutions() (in module filter)</a>
 </li>
       <li><a href="filter.html#filter.filter_symmetric_solutions">filter_symmetric_solutions() (in module filter)</a>
+</li>
+      <li><a href="trainer.html#trainer.Result.fn">fn (trainer.Result attribute)</a>
+</li>
+      <li><a href="trainer.html#trainer.Result.fp">fp (trainer.Result attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -261,13 +280,29 @@
 </li>
       <li><a href="trainer.html#trainer.Result">Result (class in trainer)</a>
 </li>
+      <li><a href="rule_optimizer.html#module-rule_optimizer">rule_optimizer (module)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="rule_optimizer.html#module-rule_optimizer">rule_optimizer (module)</a>
+      <li><a href="rule_optimizer.html#rule_optimizer.run_rule_optimizer">run_rule_optimizer() (in module rule_optimizer)</a>
 </li>
       <li><a href="run_trainer.html#module-run_trainer">run_trainer (module)</a>
 </li>
       <li><a href="run_trainer.html#run_trainer.run_trainer">run_trainer() (in module run_trainer)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="trainer.html#trainer.Result.size">size (trainer.Result attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="trainer.html#trainer.Result.solutions_by_gate">solutions_by_gate (trainer.Result attribute)</a>
+</li>
+      <li><a href="trainer.html#trainer.Result.solutions_str">solutions_str (trainer.Result attribute)</a>
 </li>
   </ul></td>
 </tr></table>

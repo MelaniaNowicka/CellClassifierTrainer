@@ -36,7 +36,13 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="test_training module" href="test_training.html" /> 
+    <link rel="prev" title="run_trainer module" href="run_trainer.html" />
+<script type="text/javascript">
+  window.onload = function() {
+    document.body.innerHTML = document.body.innerHTML.replace(/ module/g, '');
+  }
+</script>
+
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,23 +87,17 @@
               
             
             
-              <p class="caption"><span class="caption-text">Code documentation:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">CellClassifierTrainer</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="ASP_prog_generator.html">ASP_prog_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="asp_py_lextab.html">asp_py_lextab module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="asp_py_parsetab.html">asp_py_parsetab module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="classifier.html">classifier module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="converter.html">converter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_data.html">example_data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="feature_analyser.html">feature_analyser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filter.html">filter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rule_optimizer.html">rule_optimizer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_trainer.html">run_trainer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_training.html">test_training module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">trainer module</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">CellClassifierTrainer documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ASP_prog_generator.html">ASP_prog_generator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classifier.html">classifier module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converter.html">converter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_analyser.html">feature_analyser module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filter.html">filter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rule_optimizer.html">rule_optimizer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_trainer.html">run_trainer module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">trainer module</a></li>
 </ul>
 
             
@@ -144,8 +144,6 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="modules.html">CellClassifierTrainer</a> &raquo;</li>
-        
       <li>trainer module</li>
     
     
@@ -172,18 +170,72 @@
 <em class="property">class </em><code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">Result</code><span class="sig-paren">(</span><em class="sig-param">solutions_str</em>, <em class="sig-param">solutions_by_gate</em>, <em class="sig-param">errors</em>, <em class="sig-param">fp</em>, <em class="sig-param">fn</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.Result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class representing an ASP Result.</p>
+<dl class="attribute">
+<dt id="trainer.Result.solutions_str">
+<code class="sig-name descname">solutions_str</code><a class="headerlink" href="#trainer.Result.solutions_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>the list of all solutions belonging to the Result formatted as strings</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>solutions_str</strong> (<em>list</em>) – the list of all solutions belonging to the Result formatted as strings</p></li>
-<li><p><strong>solutions_by_gate</strong> (<em>list</em>) – the list of all solutions belonging to the Result formatted as lists</p></li>
-<li><p><strong>errors</strong> (<em>int</em>) – the list of total errors received for the Result</p></li>
-<li><p><strong>fp</strong> (<em>int</em>) – the number of false positives received for the Result</p></li>
-<li><p><strong>fn</strong> (<em>int</em>) – the number of false negatives received for the Result</p></li>
-<li><p><strong>size</strong> (<em>int</em>) – the size of solutions in the Result</p></li>
-</ul>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trainer.Result.solutions_by_gate">
+<code class="sig-name descname">solutions_by_gate</code><a class="headerlink" href="#trainer.Result.solutions_by_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>the list of all solutions belonging to the Result formatted as lists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trainer.Result.errors">
+<code class="sig-name descname">errors</code><a class="headerlink" href="#trainer.Result.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>the list of total errors received for the Result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trainer.Result.fp">
+<code class="sig-name descname">fp</code><a class="headerlink" href="#trainer.Result.fp" title="Permalink to this definition">¶</a></dt>
+<dd><p>the number of false positives received for the Result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trainer.Result.fn">
+<code class="sig-name descname">fn</code><a class="headerlink" href="#trainer.Result.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>the number of false negatives received for the Result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trainer.Result.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#trainer.Result.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>the size of solutions in the Result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">
@@ -228,7 +280,7 @@
 
 <dl class="function">
 <dt id="trainer.train_classifiers">
-<code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">train_classifiers</code><span class="sig-paren">(</span><em class="sig-param">instance</em>, <em class="sig-param">program</em>, <em class="sig-param">fp_max</em>, <em class="sig-param">fn_max</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.train_classifiers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">trainer.</code><code class="sig-name descname">train_classifiers</code><span class="sig-paren">(</span><em class="sig-param">instance</em>, <em class="sig-param">program</em>, <em class="sig-param">fp_min</em>, <em class="sig-param">fn_min</em>, <em class="sig-param">fp_max</em>, <em class="sig-param">fn_max</em><span class="sig-paren">)</span><a class="headerlink" href="#trainer.train_classifiers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Trains classifiers according to constraints relaxation described in Becker et al. <a class="footnote-reference brackets" href="#id4" id="id1">1</a>
 using RnaCancerClassifier <a class="footnote-reference brackets" href="#id5" id="id2">2</a> and Clyngor <a class="footnote-reference brackets" href="#id6" id="id3">3</a>.</p>
 <dl class="field-list simple">
@@ -236,6 +288,8 @@ using RnaCancerClassifier <a class="footnote-reference brackets" href="#id5" id=
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>instance</strong> (<em>str</em>) – instance</p></li>
 <li><p><strong>program</strong> (<em>str</em>) – ASP program</p></li>
+<li><p><strong>fp_min</strong> (<em>int</em>) – number of min allowed false positive errors</p></li>
+<li><p><strong>fn_min</strong> (<em>int</em>) – number of min allowed false positive errors</p></li>
 <li><p><strong>fp_max</strong> (<em>int</em>) – number of max allowed false positive errors</p></li>
 <li><p><strong>fn_max</strong> (<em>int</em>) – number of max allowed false negative errors</p></li>
 </ul>
@@ -272,7 +326,7 @@ using RnaCancerClassifier <a class="footnote-reference brackets" href="#id5" id=
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="test_training.html" class="btn btn-neutral float-left" title="test_training module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="run_trainer.html" class="btn btn-neutral float-left" title="run_trainer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

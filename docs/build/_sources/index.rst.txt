@@ -3,15 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to CTT-doc's documentation!
-===================================
+CellClassifierTrainer documentation
+***********************************
 
 .. toctree::
    :maxdepth: 2
-   :caption: HOW TO:
+   :caption: Contents:
 
+   readme
    modules
-   how-to
 
 
 

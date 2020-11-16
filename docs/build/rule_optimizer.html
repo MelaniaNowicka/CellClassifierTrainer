@@ -37,7 +37,13 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="run_trainer module" href="run_trainer.html" />
-    <link rel="prev" title="filter module" href="filter.html" /> 
+    <link rel="prev" title="filter module" href="filter.html" />
+<script type="text/javascript">
+  window.onload = function() {
+    document.body.innerHTML = document.body.innerHTML.replace(/ module/g, '');
+  }
+</script>
+
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,23 +88,17 @@
               
             
             
-              <p class="caption"><span class="caption-text">Code documentation:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">CellClassifierTrainer</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="ASP_prog_generator.html">ASP_prog_generator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="asp_py_lextab.html">asp_py_lextab module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="asp_py_parsetab.html">asp_py_parsetab module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="classifier.html">classifier module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="converter.html">converter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_data.html">example_data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="feature_analyser.html">feature_analyser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filter.html">filter module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">rule_optimizer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_trainer.html">run_trainer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_training.html">test_training module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trainer.html">trainer module</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">CellClassifierTrainer documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ASP_prog_generator.html">ASP_prog_generator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classifier.html">classifier module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converter.html">converter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_analyser.html">feature_analyser module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filter.html">filter module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">rule_optimizer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_trainer.html">run_trainer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trainer.html">trainer module</a></li>
 </ul>
 
             
@@ -145,8 +145,6 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="modules.html">CellClassifierTrainer</a> &raquo;</li>
-        
       <li>rule_optimizer module</li>
     
     
@@ -169,9 +167,40 @@
   <div class="section" id="module-rule_optimizer">
 <span id="rule-optimizer-module"></span><h1>rule_optimizer module<a class="headerlink" href="#module-rule_optimizer" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="rule_optimizer.arg_parser">
+<code class="sig-prename descclassname">rule_optimizer.</code><code class="sig-name descname">arg_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rule_optimizer.arg_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to parse command line arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>parsed arguments</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>namespace</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="rule_optimizer.optimize_rules">
-<code class="sig-prename descclassname">rule_optimizer.</code><code class="sig-name descname">optimize_rules</code><span class="sig-paren">(</span><em class="sig-param">asp_program</em>, <em class="sig-param">fp_max</em>, <em class="sig-param">fn_max</em><span class="sig-paren">)</span><a class="headerlink" href="#rule_optimizer.optimize_rules" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rule_optimizer.</code><code class="sig-name descname">optimize_rules</code><span class="sig-paren">(</span><em class="sig-param">instance</em>, <em class="sig-param">program</em>, <em class="sig-param">fp_max</em>, <em class="sig-param">fn_max</em><span class="sig-paren">)</span><a class="headerlink" href="#rule_optimizer.optimize_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimizes rules according to ASP constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<em>str</em>) – instance</p></li>
+<li><p><strong>program</strong> (<em>str</em>) – program</p></li>
+<li><p><strong>fp_max</strong> (<em>int</em>) – upper bound on false positives</p></li>
+<li><p><strong>fn_max</strong> (<em>int</em>) – upper bound on false negatives</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="rule_optimizer.run_rule_optimizer">
+<code class="sig-prename descclassname">rule_optimizer.</code><code class="sig-name descname">run_rule_optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rule_optimizer.run_rule_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the training of classifiers.</p>
+</dd></dl>
 
 </div>
 
