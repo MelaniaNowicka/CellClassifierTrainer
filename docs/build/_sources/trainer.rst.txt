@@ -1,5 +1,5 @@
-trainer module
-==============
+trainer
+=======
 
 .. automodule:: trainer
    :members:

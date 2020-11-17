@@ -1,5 +1,5 @@
-example\_data module
-====================
+example\_data
+=============
 
 .. automodule:: example_data
    :members:

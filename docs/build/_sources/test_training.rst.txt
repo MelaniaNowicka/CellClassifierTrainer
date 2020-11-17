@@ -1,5 +1,5 @@
-test\_training module
-=====================
+test\_training
+==============
 
 .. automodule:: test_training
    :members:

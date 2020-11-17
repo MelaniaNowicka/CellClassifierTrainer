@@ -1,5 +1,5 @@
-classifier module
-=================
+classifier
+==========
 
 .. automodule:: classifier
    :members:

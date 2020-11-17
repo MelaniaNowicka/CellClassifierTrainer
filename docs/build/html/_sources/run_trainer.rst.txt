@@ -1,5 +1,5 @@
-run\_trainer module
-===================
+run\_trainer
+============
 
 .. automodule:: run_trainer
    :members:
