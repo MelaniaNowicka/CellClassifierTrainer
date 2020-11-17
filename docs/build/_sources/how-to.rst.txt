@@ -1,7 +1,0 @@
-How to
-=====================
-
-.. toctree::
-   :maxdepth: 4
-
-    ASP_prog_generator
