@@ -1,5 +1,5 @@
-converter
-=========
+converter module
+================
 
 .. automodule:: converter
    :members:

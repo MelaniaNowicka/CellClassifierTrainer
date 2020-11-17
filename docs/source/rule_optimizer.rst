@@ -1,5 +1,5 @@
-rule\_optimizer
-===============
+rule\_optimizer module
+======================
 
 .. automodule:: rule_optimizer
    :members:

@@ -1,5 +1,5 @@
-filter
-======
+filter module
+=============
 
 .. automodule:: filter
    :members:

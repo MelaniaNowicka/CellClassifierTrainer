@@ -1,5 +1,5 @@
-ASP\_prog\_generator
-====================
+ASP\_prog\_generator module
+===========================
 
 .. automodule:: ASP_prog_generator
    :members:

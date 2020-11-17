@@ -1,5 +1,5 @@
-feature\_analyser
-=================
+feature\_analyser module
+========================
 
 .. automodule:: feature_analyser
    :members:
