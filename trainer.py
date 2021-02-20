@@ -4,6 +4,7 @@ import converter
 from clyngor import solve
 import numpy
 import sys
+import os
 
 
 # class for result of ASP computation
@@ -99,8 +100,10 @@ def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
 
     Returns
     -------
-    float
-        balanced accuracy
+    errors : list
+        list of number of errors
+    returned_results : list
+        list of returned results
 
     References
     ----------
@@ -194,7 +197,7 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
     for solution in solutions:  # iterate over solutions
 
         # train data scores
-        print("\nSOLUTION ", solution_id)
+        print("\nSOLUTION ", solution_id)  # show solution id
         solution_id += 1
         print("##SUM: ", solution.errors, "##")  # show number of errors
         print("FP: ", solution.fp, "FN: ", solution.fn)  # show number of false positives and negatives
@@ -218,14 +221,19 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
         print("TEST BACC: ", bacc)
         bacc_test_list.append(bacc)
 
-    feature_analyser.rank_features_by_frequency(solutions)  # analyse features
+    path_train = test_data
+    head_tail = os.path.split(path_train)
+    path = head_tail[0]
+    file_name = head_tail[1]
+
+    feature_analyser.rank_features_by_frequency(solutions, path, file_name)  # analyse features
 
     # average results for all solutions
     print("\n\n###################################")
     print("############AVERAGE RESULTS############")
     print("###################################\n")
     print("AVG TRAIN BACC: ", numpy.average(bacc_train_list))  # calculate average train bacc
-    if len(bacc_test_list) > 1:  # if more than one solution was found
+    if len(bacc_train_list) > 1:  # if more than one solution was found
         train_std = numpy.std(bacc_train_list, ddof=1)
         print("STD TRAIN BACC: ", train_std)
     else:
@@ -246,7 +254,3 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
           numpy.average(bacc_test_list), ";", test_std, ";",
           numpy.average(tpr_test_list), ";", numpy.average(tnr_test_list), ";",
           numpy.average(size_list))
-
-
-
-

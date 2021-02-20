@@ -42,6 +42,11 @@ the order of inputs and gates)
 
 **AVERAGE RESULTS** - average results for best classifiers
 
+Classifier format:
+
+*gate_input(1,positive,g34) gate_input(1,positive,g4) gate_input(2,negative,g102)**
+
+Each input is described by *gate_input(gate_id,sign,feature_id)*, which translates to (g34 OR g4) AND g102.
 
 ## Requirements
 
@@ -63,12 +68,14 @@ To download the CellClassifierTrainer from Github, do::
 
 To use CellClassifierTrainer, run::
 
-    $ python -u run_trainer.py --train_data train_dataset.csv --constr asp_constr.csv --test_data test_dataset.csv --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 5 --fn 5
+    $ python -u run_trainer.py --train_data train_dataset.csv --constr asp_constr.csv --test_data test_dataset.csv 
+    --train_p 80 --train_n 80 --test_p 20 --test_n 20 --min_fp 0 --min_fn 0 --max_fp 5 --max_fn 5
 
 
 Run exemplary training with a command::
 
-    $ python -u run_trainer.py --train_data example_train.csv --constr asp_constr.csv --test_data example_test.csv --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 2 --fn 2
+    $ python -u run_trainer.py --train_data example_train.csv --constr asp_constr.csv --test_data example_test.csv 
+    --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 2 --fn 2
 
 Parameters description:
 
@@ -115,6 +122,10 @@ and [Becker et al.](https://www.frontiersin.org/articles/10.3389/fbioe.2018.0007
 ***Silent*** - if 1 print all information, otherwise 0
 
 ***UniquenessConstraint*** - if 1 inputs should be unique across the classifier, irrespective of whether they are negated or not, otherwise 0
+
+***BooleanFunction*** 
+* 0 - Conjunctive Normal Form (CNF)
+* 1 - Disjunctive Normal Form (DNF)
 
 ***OptimizationStrategy***
 * 0 - no optimization

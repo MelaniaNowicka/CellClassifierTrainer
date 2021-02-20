@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Documentation of RAccoon &mdash; CellClassifierTrainer  documentation</title>
+  <title>How to &mdash; CellClassifierTrainer  documentation</title>
   
 
   
@@ -35,7 +35,9 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CellClassifierTrainer" href="modules.html" />
+    <link rel="prev" title="Welcome to CellClassifierTrainer’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,17 +82,20 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Documentation of RAccoon</a><ul>
-<li><a class="reference internal" href="#requirements">Requirements</a></li>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#data-format">Data format</a></li>
-<li><a class="reference internal" href="#training-and-testing-classifiers">Training and testing classifiers</a></li>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-data-format">Input data format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running">Running</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asp-constraints">ASP constraints</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">CellClassifierTrainer</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -135,7 +140,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Documentation of RAccoon</li>
+      <li>How to</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,152 +159,132 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="documentation-of-raccoon">
-<h1>Documentation of RAccoon<a class="headerlink" href="#documentation-of-raccoon" title="Permalink to this headline">¶</a></h1>
-<p>A genetic algorithm to designing distributed cell classifier circuits.</p>
+  <div class="section" id="how-to">
+<h1>How to<a class="headerlink" href="#how-to" title="Permalink to this headline">¶</a></h1>
+<p>CellClassifierTrainer allows to train boolean classifiers based on a feature expression profile. The tool was created to
+classify cancerous and control healthy cells based on discretized miRNA differential expression profiles. Although,
+CellClassifierTrainer may be applied to other binary classification problems based on discretized features.</p>
+<p>CellClassifierTrainer employs <a class="reference external" href="https://github.com/hklarner/RnaCancerClassifier">RnaCancerClassifier</a>
+by <a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full">Becker et al.</a> and automatizes the constraint
+relaxation-based optimization as described in Becker et al.</p>
+<div class="section" id="input-data-format">
+<h2>Input data format<a class="headerlink" href="#input-data-format" title="Permalink to this headline">¶</a></h2>
+<p>First column (ID) must contain unique sample IDs , second (Annots) - the annotation of samples.
+The following columns include discretized miRNA profiles (use ‘;’ as delimiter). Note, ASP does
+not parse characters such as ‘-‘, ‘:’, etc. Use only letters and numbers in the header.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 29%" />
+<col style="width: 24%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Annots</p></th>
+<th class="head"><p>miR1</p></th>
+<th class="head"><p>miR2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>CellClassifierTrainer creates an ASP program (.asp) and prints a log (exemplary log: example.log).</p>
+<p>Log sections:</p>
+<p><strong>RNA CANCER CLASSIFIER OUTPUT</strong> - includes output information returned by RnaCancerClassifier</p>
+<p><strong>TRAINING CLASSIFIERS</strong> - shows progress in classifier training</p>
+<p><strong>FINDING BEST SOLUTIONS</strong> - filters best solutions according to the total number of errors</p>
+<p><strong>FILTERING ACCORDING TO SIZE</strong> - filters best solutions according to the size (total number of inputs)</p>
+<p><strong>REMOVING SYMMETRIC SOLUTIONS</strong> - filters symmetric solutions (copies of identical solutions differing only in
+the order of inputs and gates)</p>
+<p><strong>TESTING CLASSIFIERS</strong> - evaluates best classifier’s performance on test data set including feature frequency analysis</p>
+<p><strong>AVERAGE RESULTS</strong> - average results for best classifiers</p>
+</div>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>RAccoon has the following dependencies:</p>
+<p>CellClassifierTrainer has the following dependencies:</p>
 <ul class="simple">
-<li><p>Python 3+</p></li>
-</ul>
-<p>Following packages needs to be installed:</p>
-<ul class="simple">
-<li><p>pandas</p></li>
+<li><p>Python 3.5 (required to run clyngor)</p></li>
 <li><p>scikit-learn</p></li>
-<li><p>numpy</p></li>
+<li><p><a class="reference external" href="https://anaconda.org/conda-forge/clyngor">clyngor</a></p></li>
 </ul>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>To download the RAccoon from Github, do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/MelaniaNowicka/RAccoon
+<p>To download the CellClassifierTrainer from Github, do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/MelaniaNowicka/CellClassifierTrainer
 </pre></div>
 </div>
 </div>
-<div class="section" id="data-format">
-<h2>Data format<a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h2>
-<p>Use the following format of the .csv file: the first column includes unique IDs of samples, the second column includes
-annotation (0 - negative samples, 1 - positive samples), the following columns include miRNA profiles. Use semicolon as
-a separator. An example may be found below:</p>
-<p>Continuous data:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 29%" />
-<col style="width: 24%" />
-<col style="width: 26%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Annots</p></th>
-<th class="head"><p>miR1</p></th>
-<th class="head"><p>miR2</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>0</p></td>
-<td><p>345</p></td>
-<td><p>12</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>0</p></td>
-<td><p>1232</p></td>
-<td><p>234</p></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>1</p></td>
-<td><p>2</p></td>
-<td><p>23</p></td>
-</tr>
-</tbody>
-</table>
-<p>If you use continuous data, keep the discretization on.</p>
-<p>Discretized data:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 29%" />
-<col style="width: 24%" />
-<col style="width: 26%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Annots</p></th>
-<th class="head"><p>miR1</p></th>
-<th class="head"><p>miR2</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>0</p></td>
-<td><p>1</p></td>
-<td><p>0</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>0</p></td>
-<td><p>1</p></td>
-<td><p>0</p></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>1</p></td>
-<td><p>0</p></td>
-<td><p>1</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="training-and-testing-classifiers">
-<h2>Training and testing classifiers<a class="headerlink" href="#training-and-testing-classifiers" title="Permalink to this headline">¶</a></h2>
-<p>To train a classifier run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python run_GA.py --train train_data.csv
+<div class="section" id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<p>To use CellClassifierTrainer, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -u run_trainer.py --train_data train_dataset.csv --constr asp_constr.csv --test_data test_dataset.csv --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 5 --fn 5
 </pre></div>
 </div>
-<p>Use exemplary data to try it: <em>train_data.csv, test_data.csv</em>.</p>
-<p>Description of parameters:</p>
-<p><strong>–train</strong> - training data set in the .csv format (obligatory)</p>
-<p><strong>–test</strong> - testing data set in the .csv format (default: None)</p>
-<p>Training and test data should be formatted according to the description in the Data format section.</p>
-<p><strong>–filter</strong> - filtering non-relevant features (default: t, f to turn off)</p>
-<p>Features that are non-relevant (columns filled with only 0s or 1s) are filtered out as such features are not
-informative.</p>
-<p><strong>–discretize</strong> - discretize the data (default: t, f to turn off)</p>
-<p><strong>–mbin</strong> - discretization parameter: m segments (default: 50)</p>
-<p><strong>-abin</strong> - discretization parameter: alpha (default: 0.5)</p>
-<p><strong>–lbin</strong> - discretization parameter: lambda (default: 0.1)</p>
-<p>Data discretization according to [Wang et al. (2014)](<a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S0925231214008480">https://www.sciencedirect.com/science/article/abs/pii/S0925231214008480</a>).
-To know more please look into the mentioned publication.</p>
-<p><strong>-c</strong> - maximal size of a classifier (maximal number of single rules in the classifier, default: 5)</p>
-<p><strong>-a</strong> - classification threshold (default: None)</p>
-<p>If classification threshold is set to a certain value (e.g., 0.5) the threshold is fixed for all classifiers in
-the GA run, if None - different values of thresholds (0.25, 0.45, 0.5, 0.75 and 1.0) are randomly assigned to
-the classifiers.</p>
-<p><strong>-w</strong> - multi-objective function weight (default: 0.5)</p>
-<p><strong>-u</strong> - uniqueness option (related to calculation of CDD classifier score, default: True)</p>
-<p><strong>-i</strong> - number of iterations without improvement after which the algorithm terminates (default: 30)</p>
-<p><strong>-f</strong> - number of fixed iterations after which the algorithm terminates (default: None)</p>
-<p><strong>-p</strong> - population size (default: 300)</p>
-<p><strong>–elitism</strong> - if True the best found solutions are added to the population in each selection operation (default: True)</p>
-<p><strong>–rules</strong> - path to a file of pre-optimized rules (default: None)</p>
-<p><strong>–poptfrac</strong> - pre-optimized fraction of population, the rest of solutions is generated randomly (default: 0.5)</p>
-<p><strong>-x</strong> - crossover probability (default: 0.8)</p>
-<p><strong>-m</strong> - mutation probability (default: 0.1)</p>
-<p><strong>-t</strong> - tournament size (default: 0.2)</p>
-<p><strong>Running complex testing scheme</strong></p>
-<p>Run the analysis using:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python run_tests.py --train train_data.csv --test test_data.csv --config config.ini
+<p>Run exemplary training with a command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -u run_trainer.py --train_data example_train.csv --constr asp_constr.csv --test_data example_test.csv --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 2 --fn 2
 </pre></div>
 </div>
-<p>Use exemplary data to try it: <em>train_data.csv, test_data.csv</em>.</p>
-<p>You may change all the parameters in config.ini. Description may be found
-<a class="reference external" href="https://github.com/MelaniaNowicka/RAccoon/blob/master/config.ini">here</a>.</p>
-<p>Output log description:</p>
-<p><strong>READING CONFIG</strong> - config parameter values</p>
-<p><strong>READING DATA</strong> - data information</p>
-<p><strong>PARAMETER TUNING</strong> - parameter tuning section including data division and pre-processing information as well
-as parameter tuning results</p>
-<p><strong>FINAL TEST</strong> - results of the final tests (the classifiers are trained with tuned parameters and tested on test data)</p>
+<p>Parameters description:</p>
+<p><strong>– train_data</strong> - path to training data set (.csv, obligatory)</p>
+<p><strong>– constr</strong> - path to ASP program constraints (.csv, explained in the next section, obligatory)</p>
+<p><strong>– test_data</strong> - path to test data set (.csv, default None)</p>
+<p><strong>– train_p</strong> - number of positive samples in training data set (int, obligatory)</p>
+<p><strong>– train_n</strong> - number of negative samples in training data set (int, obligatory)</p>
+<p><strong>– test_p</strong> - number of positive samples in test data set (int, default None)</p>
+<p><strong>– test_n</strong> - number of negative samples in test data set (int, default None)</p>
+<p><strong>– min_fp</strong> - lower bound on allowed false positive errors (int, default 0)</p>
+<p><strong>– min_fn</strong> - lower bound on allowed false negative errors (int, default 0)</p>
+<p><strong>– max_fp</strong> - upper bound on allowed false positive errors (int, default 0)</p>
+<p><strong>– max_fn</strong> - upper bound on allowed false negative errors (int, default 0)</p>
+</div>
+<div class="section" id="asp-constraints">
+<h2>ASP constraints<a class="headerlink" href="#asp-constraints" title="Permalink to this headline">¶</a></h2>
+<p>ASP constraints are included in constr.csv file. Explanation of particular constraints:
+(to know more see [RnaCancerClassifier](<a class="reference external" href="https://github.com/hklarner/RnaCancerClassifier">https://github.com/hklarner/RnaCancerClassifier</a>)
+and [Becker et al.](<a class="reference external" href="https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full">https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full</a>)):</p>
+<p><strong>LowerBoundInputs</strong> - lower bound on number of inputs in classifier (int)</p>
+<p><strong>UpperBoundInputs</strong> - upper bound on number of inputs in classifier (int)</p>
+<p><strong>LowerBoundGates</strong> - lower bound on number of gates in classifier (int)</p>
+<p><strong>UpperBoundGates</strong> - upper bound on number of gates in classifier (int)</p>
+<p><strong>EfficiencyConstraint</strong> - if 1 ignore non-relevant features, otherwise 0</p>
+<p><strong>BreakSymmetries</strong> - if 1 part of symmetric solutions are removed, otherwise 0</p>
+<p><strong>Silent</strong> - if 1 print all information, otherwise 0</p>
+<p><strong>UniquenessConstraint</strong> - if 1 inputs should be unique across the classifier, irrespective of whether they are negated or not, otherwise 0</p>
+<p><strong>OptimizationStrategy</strong>
+* 0 - no optimization
+* 1 - minimize number of inputs then minimize number of gates
+* 2 - minimize number of gates then minimize number of inputs
+* 3 - minimize number of inputs
+* 4 - minimize number of gates</p>
+<p><strong>PerfectClassifier</strong> - if 1 look for perfect classifiers (no errors allowed), otherwise 0</p>
+<p><strong>AddBoundsOnErrors</strong> - if 1 add bounds on errors, otherwise 0</p>
+<p><strong>UpperBoundFalsePos</strong> - upper bound on false positive errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)</p>
+<p><strong>UpperBoundFalseNeg</strong> - upper bound on false negative errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)</p>
+<p><strong>GateTypeX_LowerBoundPos</strong> - lower bound on positive inputs in gate type X (X - number of gate type (1, 2, 3…))</p>
+<p><strong>GateTypeX_UpperBoundPos</strong> - upper bound on positive input in gate type X</p>
+<p><strong>GateTypeX_LowerBoundNeg</strong> - lower bound on negative inputs in gate type X</p>
+<p><strong>GateTypeX_UpperBoundNeg</strong> - upper bound on negative input in gate type X</p>
+<p><strong>GateTypeX_UpperBoundOcc</strong> - upper bound on number of occurrences of gate type X</p>
 </div>
 </div>
 
@@ -308,6 +293,15 @@ as parameter tuning results</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules.html" class="btn btn-neutral float-right" title="CellClassifierTrainer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to CellClassifierTrainer’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

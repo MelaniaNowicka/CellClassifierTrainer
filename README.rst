@@ -1,51 +1,21 @@
 ###########################################
-Documentation of RAccoon
+Introduction
 ###########################################
 
-A genetic algorithm to designing distributed cell classifier circuits.
+CellClassifierTrainer allows to train boolean classifiers based on a feature expression profile. The tool was created to
+classify cancerous and control healthy cells based on discretized miRNA differential expression profiles. Although,
+CellClassifierTrainer may be applied to other binary classification problems based on discretized features.
 
-Requirements
-============
-RAccoon has the following dependencies:
+CellClassifierTrainer employs `RnaCancerClassifier <https://github.com/hklarner/RnaCancerClassifier>`_
+by `Becker et al. <https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full>`_ and automatizes the constraint
+relaxation-based optimization as described in Becker et al.
 
-- Python 3+
+Input data format
+=================
 
-Following packages needs to be installed:
-
-- pandas
-- scikit-learn
-- numpy
-
-Installation
-============
-
-To download the RAccoon from Github, do::
-
-    $ git clone https://github.com/MelaniaNowicka/RAccoon
-
-
-Data format
-===========
-
-Use the following format of the .csv file: the first column includes unique IDs of samples, the second column includes
-annotation (0 - negative samples, 1 - positive samples), the following columns include miRNA profiles. Use semicolon as
-a separator. An example may be found below:
-
-Continuous data:
-
-+-------+----------+--------+---------+
-|  ID   |  Annots  |  miR1  |  miR2   |
-+=======+==========+========+=========+
-| 1     | 0        | 345    | 12      |
-+-------+----------+--------+---------+
-| 2     | 0        | 1232   | 234     |
-+-------+----------+--------+---------+
-| 3     | 1        | 2      | 23      |
-+-------+----------+--------+---------+
-
-If you use continuous data, keep the discretization on.
-
-Discretized data:
+First column (ID) must contain unique sample IDs , second (Annots) - the annotation of samples.
+The following columns include discretized miRNA profiles (use ';' as delimiter). Note, ASP does
+not parse characters such as '-', ':', etc. Use only letters and numbers in the header.
 
 +-------+----------+--------+---------+
 |  ID   |  Annots  |  miR1  |  miR2   |
@@ -57,92 +27,133 @@ Discretized data:
 | 3     | 1        | 0      | 1       |
 +-------+----------+--------+---------+
 
-Training and testing classifiers
-================================
 
-To train a classifier run::
+Output
+======
 
+CellClassifierTrainer creates an ASP program (.asp) and prints a log (exemplary log: example.log).
 
-$ python run_GA.py --train train_data.csv
+Log sections:
 
+**RNA CANCER CLASSIFIER OUTPUT** - includes output information returned by RnaCancerClassifier
 
-Use exemplary data to try it: *train_data.csv, test_data.csv*.
+**TRAINING CLASSIFIERS** - shows progress in classifier training
 
-Description of parameters:
+**FINDING BEST SOLUTIONS** - filters best solutions according to the total number of errors
 
-**--train** - training data set in the .csv format (obligatory)
+**FILTERING ACCORDING TO SIZE** - filters best solutions according to the size (total number of inputs)
 
-**--test** - testing data set in the .csv format (default: None)
+**REMOVING SYMMETRIC SOLUTIONS** - filters symmetric solutions (copies of identical solutions differing only in
+the order of inputs and gates)
 
-Training and test data should be formatted according to the description in the Data format section.
+**TESTING CLASSIFIERS** - evaluates best classifier's performance on test data set including feature frequency analysis
 
-**--filter** - filtering non-relevant features (default: t, f to turn off)
-
-Features that are non-relevant (columns filled with only 0s or 1s) are filtered out as such features are not
-informative.
-
-**--discretize** - discretize the data (default: t, f to turn off)
-
-**--mbin** - discretization parameter: m segments (default: 50)
-
-**-abin** - discretization parameter: alpha (default: 0.5)
-
-**--lbin** - discretization parameter: lambda (default: 0.1)
-
-Data discretization according to [Wang et al. (2014)](https://www.sciencedirect.com/science/article/abs/pii/S0925231214008480).
-To know more please look into the mentioned publication.
-
-**-c** - maximal size of a classifier (maximal number of single rules in the classifier, default: 5)
-
-**-a** - classification threshold (default: None)
-
-If classification threshold is set to a certain value (e.g., 0.5) the threshold is fixed for all classifiers in
-the GA run, if None - different values of thresholds (0.25, 0.45, 0.5, 0.75 and 1.0) are randomly assigned to
-the classifiers.
-
-**-w** - multi-objective function weight (default: 0.5)
-
-**-u** - uniqueness option (related to calculation of CDD classifier score, default: True)
-
-**-i** - number of iterations without improvement after which the algorithm terminates (default: 30)
-
-**-f** - number of fixed iterations after which the algorithm terminates (default: None)
-
-**-p** - population size (default: 300)
-
-**--elitism** - if True the best found solutions are added to the population in each selection operation (default: True)
-
-**--rules** - path to a file of pre-optimized rules (default: None)
-
-**--poptfrac** - pre-optimized fraction of population, the rest of solutions is generated randomly (default: 0.5)
-
-**-x** - crossover probability (default: 0.8)
-
-**-m** - mutation probability (default: 0.1)
-
-**-t** - tournament size (default: 0.2)
+**AVERAGE RESULTS** - average results for best classifiers
 
 
-**Running complex testing scheme**
+Requirements
+============
 
-Run the analysis using::
+CellClassifierTrainer has the following dependencies:
 
-$ python run_tests.py --train train_data.csv --test test_data.csv --config config.ini
+- Python 3.5 (required to run clyngor)
+- scikit-learn
+- `clyngor <https://anaconda.org/conda-forge/clyngor>`_
 
-Use exemplary data to try it: *train_data.csv, test_data.csv*.
 
-You may change all the parameters in config.ini. Description may be found
-`here <https://github.com/MelaniaNowicka/RAccoon/blob/master/config.ini>`_.
+Installation
+============
 
-Output log description:
+To download the CellClassifierTrainer from Github, do::
 
-**READING CONFIG** - config parameter values
+    $ git clone https://github.com/MelaniaNowicka/CellClassifierTrainer
 
-**READING DATA** - data information
 
-**PARAMETER TUNING** - parameter tuning section including data division and pre-processing information as well
-as parameter tuning results
+Running
+=======
 
-**FINAL TEST** - results of the final tests (the classifiers are trained with tuned parameters and tested on test data)
+To use CellClassifierTrainer, run::
 
+    $ python -u run_trainer.py --train_data train_dataset.csv --constr asp_constr.csv --test_data test_dataset.csv --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 5 --fn 5
+
+
+Run exemplary training with a command::
+
+    $ python -u run_trainer.py --train_data example_train.csv --constr asp_constr.csv --test_data example_test.csv --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 2 --fn 2
+
+Parameters description:
+
+**-- train_data** - path to training data set (.csv, obligatory)
+
+**-- constr** - path to ASP program constraints (.csv, explained in the next section, obligatory)
+
+**-- test_data** - path to test data set (.csv, default None)
+
+**-- train_p** - number of positive samples in training data set (int, obligatory)
+
+**-- train_n** - number of negative samples in training data set (int, obligatory)
+
+**-- test_p** - number of positive samples in test data set (int, default None)
+
+**-- test_n** - number of negative samples in test data set (int, default None)
+
+**-- min_fp** - lower bound on allowed false positive errors (int, default 0)
+
+**-- min_fn** - lower bound on allowed false negative errors (int, default 0)
+
+**-- max_fp** - upper bound on allowed false positive errors (int, default 0)
+
+**-- max_fn** - upper bound on allowed false negative errors (int, default 0)
+
+ASP constraints
+===============
+
+ASP constraints are included in constr.csv file. Explanation of particular constraints:
+(to know more see [RnaCancerClassifier](https://github.com/hklarner/RnaCancerClassifier)
+and [Becker et al.](https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full)):
+
+**LowerBoundInputs** - lower bound on number of inputs in classifier (int)
+
+**UpperBoundInputs** - upper bound on number of inputs in classifier (int)
+
+**LowerBoundGates** - lower bound on number of gates in classifier (int)
+
+**UpperBoundGates** - upper bound on number of gates in classifier (int)
+
+**EfficiencyConstraint** - if 1 ignore non-relevant features, otherwise 0
+
+**BreakSymmetries** - if 1 part of symmetric solutions are removed, otherwise 0
+
+**Silent** - if 1 print all information, otherwise 0
+
+**UniquenessConstraint** - if 1 inputs should be unique across the classifier, irrespective of whether they are negated or not, otherwise 0
+
+**BooleanFunction**
+* 0 - Conjunctive Normal Form (CNF)
+* 1 - Disjunctive Normal Form (DNF)
+
+**OptimizationStrategy**
+* 0 - no optimization
+* 1 - minimize number of inputs then minimize number of gates
+* 2 - minimize number of gates then minimize number of inputs
+* 3 - minimize number of inputs
+* 4 - minimize number of gates
+
+**PerfectClassifier** - if 1 look for perfect classifiers (no errors allowed), otherwise 0
+
+**AddBoundsOnErrors** - if 1 add bounds on errors, otherwise 0
+
+**UpperBoundFalsePos** - upper bound on false positive errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
+
+**UpperBoundFalseNeg** - upper bound on false negative errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
+
+**GateTypeX_LowerBoundPos** - lower bound on positive inputs in gate type X (X - number of gate type (1, 2, 3...))
+
+**GateTypeX_UpperBoundPos** - upper bound on positive input in gate type X
+
+**GateTypeX_LowerBoundNeg** - lower bound on negative inputs in gate type X
+
+**GateTypeX_UpperBoundNeg** - upper bound on negative input in gate type X
+
+**GateTypeX_UpperBoundOcc** - upper bound on number of occurrences of gate type X
 

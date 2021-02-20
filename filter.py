@@ -17,7 +17,7 @@ def filter_best_solutions(errors, solutions):
 
     Returns
     -------
-    list
+    solution_list : list
         list of solutions
 
     """
@@ -26,7 +26,8 @@ def filter_best_solutions(errors, solutions):
     print("############FINDING BEST SOLUTIONS############")
     # find best solution ids by total number of errors
     best_results_ids = [i for i, x in enumerate(errors) if x == min(errors)]
-    best_results = [solutions[i] for i in best_results_ids]  # filter best solutions
+    solution_list = list(solutions)
+    best_results = [solution_list[i] for i in best_results_ids]  # filter best solutions
 
     for result in best_results:  # result may contain several solutions for particular number of errors in total
         print("\n##SUM: ", result.errors, "##")  # show total number of errors
@@ -94,25 +95,26 @@ def filter_symmetric_solutions(solutions):
 
     Parameters
     ----------
-    solutions : list
+    solution_list : list
         list of solutions
 
     Returns
     -------
-    list
+    solutions : list
         list of solutions
 
     """
 
+    solution_list = list(solutions)
     print("\n\n####################################################")
     print("############REMOVING SYMMETRIC SOLUTIONS############\n")
-    print("Number of solutions before filtering: ", len(solutions))
+    print("Number of solutions before filtering: ", len(solution_list))
     to_del = []  # list of ids of solutions to delete
-    for i in range(0, len(solutions) - 1):
-        for j in range(i + 1, len(solutions)):
+    for i in range(0, len(solution_list) - 1):
+        for j in range(i + 1, len(solution_list)):
             # check equality of sorted solutions
             # lists of gates and inputs are sorter alphabetically
-            if sorted(solutions[i].solutions_by_gate) == sorted(solutions[j].solutions_by_gate):
+            if sorted(solution_list[i].solutions_by_gate) == sorted(solution_list[j].solutions_by_gate):
                 to_del.append(j)  # add id of solution to delete
 
     to_del = list(set(to_del))  # remove repeating ids
@@ -120,13 +122,13 @@ def filter_symmetric_solutions(solutions):
 
     # remove symmetrical solutions
     for id in to_del:
-        del solutions[id]
+        del solution_list[id]
 
-    print("Number of solutions after filtering: ", len(solutions))
-    for solution in solutions:  # show unique solutions
+    print("Number of solutions after filtering: ", len(solution_list))
+    for solution in solution_list:  # show unique solutions
         print("\n##SUM: ", solution.errors, "##")
         print("FP: ", solution.fp, "FN: ", solution.fn)
         print(solution.solutions_str)
 
-    return solutions
+    return solution_list
 

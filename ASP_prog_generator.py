@@ -64,6 +64,7 @@ def create_asp_prog(input, constraints):
                                            int(Constraints.get("BreakSymmetries")),
                                            int(Constraints.get("Silent")),
                                            int(Constraints.get("UniquenessConstraint")),
+                                           int(Constraints.get("BooleanFunctionForm")),
                                            int(Constraints.get("PerfectClassifier")),
                                            int(Constraints.get("AddBoundsOnErrors")),
                                            int(Constraints.get("UpperBoundFalsePos")),

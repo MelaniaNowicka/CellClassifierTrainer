@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 import csv
-import subprocess
-from scipy.io import loadmat
-import numpy as np
 
 
 def csv2rows(FnameCSV):
@@ -62,6 +59,7 @@ def csv2asp(fname_csv,
             break_symmetries,
             silent,
             uniqueness_constraint,
+            boolean_function_form,
             perfect_classifier,
             add_bounds_on_errors,
             upper_bound_false_pos,
@@ -100,8 +98,11 @@ def csv2asp(fname_csv,
         if True part of symmetric solutions are removed
     silent : bool
         printing option
-    uniqueness_constraint bool
+    uniqueness_constraint: bool
         if True inputs should be unique across the classifier, irrespective of whether they are negated or not
+    boolean_function_form: int
+        - 0: Conjunctive Normal Form (CNF)
+        - 1: Disjunctive Normal Form (DNF)
     perfect_classifier : bool
         if True upper bound on false positive and negative errors are 0
     add_bounds_on_errors : bool
@@ -119,6 +120,9 @@ def csv2asp(fname_csv,
         data
 
     """
+
+    boolean_function_mapping = {0: "CNF",
+                                1: "DNF"}
 
     optimization_strategy_mapping = {0: "no optimization",
                                      1: "minimize number of inputs then minimize number of gates",
@@ -271,16 +275,47 @@ def csv2asp(fname_csv,
     program += ['{gate_type(GateID,GateType): is_gate_id(GateID)} X :- upper_bound_gate_occurence(GateType,X).']
     program += ['']
 
-    program += ['% gates fire condition']
-    program += ["gate_fires(GateID,TissueID) :- gate_input(GateID,positive,MiRNA), data(TissueID,MiRNA,high)."]
-    program += ["gate_fires(GateID,TissueID) :- gate_input(GateID,negative,MiRNA), data(TissueID,MiRNA,low)."]
-    program += ['']
+    # CNF function condition (Conjunctive Normal Form - conjunction of disjunctions)
+    if boolean_function_form == 0:
+        # gate fires - disjunction
+        # at least one input must fulfill the condition:
+        # positive gate - input = 1
+        # negative gate - input = 0
+        program += ['% gates fire condition']
+        # gate fires if at least one input in a positive gate is high (1)
+        program += ["gate_fires(GateID,TissueID) :- gate_input(GateID,positive,MiRNA), data(TissueID,MiRNA,high)."]
+        # gate fires if at least one input in a negative gate is low (0)
+        program += ["gate_fires(GateID,TissueID) :- gate_input(GateID,negative,MiRNA), data(TissueID,MiRNA,low)."]
+        program += ['']
 
-    program += ['% prediction of classifier']
-    program += ["classifier(TissueID,healthy) "
-               ":- not gate_fires(GateID, TissueID), is_gate_id(GateID), is_tissue_id(TissueID)."]
-    program += ["classifier(TissueID,cancer) :- not classifier(TissueID, healthy), is_tissue_id(TissueID)."]
-    program += ['']
+        program += ['% prediction of classifier']
+        # classifier predicts that a sample is healthy if at least one gate does not fire (conjunction)
+        program += ["classifier(TissueID,healthy) "
+                    ":- not gate_fires(GateID, TissueID), is_gate_id(GateID), is_tissue_id(TissueID)."]
+        # classifier predicts that a sample is cancerous if not predicted as healthy
+        program += ["classifier(TissueID,cancer) :- not classifier(TissueID, healthy), is_tissue_id(TissueID)."]
+        program += ['']
+
+    # DNF function condition (Disjunctive Normal Form - disjunction of conjunctions)
+    if boolean_function_form == 1:
+        # gate fires - conjunction
+        # all the inputs in the gate must fulfill the condition:
+        # positive gate - input = 1
+        # negative gate - input = 0
+        program += ['% gates fire condition']
+        # gate fires if at least one input in a positive gate is low (0)
+        program += ["gate_fires(GateID,TissueID) :- gate_input(GateID,positive,MiRNA), data(TissueID,MiRNA,low)."]
+        # gate fires if at least one input in a negative gate is high (1)
+        program += ["gate_fires(GateID,TissueID) :- gate_input(GateID,negative,MiRNA), data(TissueID,MiRNA,high)."]
+        program += ['']
+
+        program += ['% prediction of classifier']
+        # classifier predicts that a sample is cancerous if at least one does not gate fire (disjunction)
+        program += ["classifier(TissueID,cancer) "
+                    ":- not gate_fires(GateID, TissueID), is_tissue_id(TissueID), is_gate_id(GateID)."]
+        # classifier predicts that a sample is healthy if not predicted as cancerous
+        program += ["classifier(TissueID,healthy) :- not classifier(TissueID, cancer), is_tissue_id(TissueID)."]
+        program += ['']
 
     if perfect_classifier:
         program += ['% consistency of classifier and data (PerfectClassifier=True)']
@@ -445,10 +480,10 @@ def check_classifier(fname_csv, gate_inputs):
 
     Parameters
     ----------
-    fname_csv : int
-        number of true positives
-    gate_inputs : int
-        number of true negatives
+    fname_csv : str
+        name of input file
+    gate_inputs : str
+        classifier
 
     Returns
     -------

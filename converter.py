@@ -19,23 +19,24 @@ def convert_solution_to_list(inputs):
 
     new_gate = []
     new_solution = []
-    gate_id = inputs[0][0]  # assign the first gate id
+    input_list = list(inputs)
+    gate_id = input_list[0][0]  # assign the first gate id
 
-    for i in range(0, len(inputs)):  # iterate over inputs in solution
+    for i in range(0, len(input_list)):  # iterate over inputs in solution
 
-        if inputs[i][0] == gate_id:  # if the current input's id is still same
-            new_gate.append((inputs[i][2], inputs[i][1]))  # add next input to the gate (feature id, sign)
+        if input_list[i][0] == gate_id:  # if the current input's id is still same
+            new_gate.append((input_list[i][2], input_list[i][1]))  # add next input to the gate (feature id, sign)
 
-            if i == len(inputs) - 1:  # if this is the last input
+            if i == len(input_list) - 1:  # if this is the last input
                 new_solution.append(sorted(new_gate))  # add last gate to solution
 
         else:  # if the current input's id is different
             new_solution.append(sorted(new_gate))  # add current gate to solution
             new_gate = []  # create new gate
-            gate_id = inputs[i][0]  # assign new current gate id
-            new_gate.append((inputs[i][2], inputs[i][1]))  # add next input to the gate (feature id, sign)
+            gate_id = input_list[i][0]  # assign new current gate id
+            new_gate.append((input_list[i][2], input_list[i][1]))  # add next input to the gate (feature id, sign)
 
-            if i == len(inputs) - 1:  # if this is the last input
+            if i == len(input_list) - 1:  # if this is the last input
                 new_solution.append(sorted(new_gate))  # add last gate to solution
 
     return new_solution
@@ -86,7 +87,7 @@ def convert_asp_results(results):
             for atom in solution:
                 input_list.append([str(atom[1][0]), atom[1][1], atom[1][2]])
 
-            # sort inputs by gate id and alphabetically
+            # sort inputs by gate id and then alphabetically
             input_list.sort(key=lambda inputs: (inputs[0], inputs))
 
             inputs_str = []  # keep inputs as strings

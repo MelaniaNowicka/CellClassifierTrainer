@@ -1,5 +1,6 @@
 import argparse
 import sys
+from datetime import datetime
 import time
 
 import ASP_prog_generator
@@ -53,6 +54,8 @@ def run_trainer():
 
     """
 
+    print("Log date: ", datetime.now().isoformat(), "\n")
+
     start_train = time.time()
 
     params = arg_parser()  # parse arguments
@@ -77,6 +80,20 @@ def run_trainer():
         test_positives = params.test_p  # number of positive samples in test data
         test_negatives = params.test_n  # number of negative samples in test data
 
+        print("\nDATA INFO")
+        print("Train data set: ", params.train_data)
+        print("Number of TP in train data: ", params.train_p)
+        print("Number of TN in train data: ", params.train_n)
+        print("Test data set: ", params.test_data)
+        print("Number of TP in test data: ", params.test_p)
+        print("Number of TN in test data: ", params.test_n)
+
+        print("\nTRAINING PARAMETERS")
+        print("Min FP: ", params.fp_min)
+        print("Min FN: ", params.fn_min)
+        print("Max FP: ", params.fp_max)
+        print("Max FN: ", params.fn_max)
+
         # train classifiers
         errors, found_solutions = trainer.train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max)
         # filter best found solutions by total number of errors
@@ -86,7 +103,7 @@ def run_trainer():
         # filter symmetric classifiers (that only differ in order of inputs and gates)
         best_results = filter.filter_symmetric_solutions(shortest_classifiers)
         # test classifiers on test data
-        if test_data is not None and len(best_results) != 0:
+        if test_data is not None and len(list(best_results)) != 0:
             trainer.test_classifiers(best_results, test_data,
                                      train_positives, train_negatives,
                                      test_positives, test_negatives)
@@ -99,4 +116,3 @@ def run_trainer():
 if __name__ == "__main__":
 
     run_trainer()
-
