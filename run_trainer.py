@@ -65,7 +65,7 @@ def run_trainer():
         sys.exit(0)
     else:
         if params.constr is None:
-            print("ERROR: ASP constraints file not given.")
+            print("ERROR: ASP constraint file not given.")
             sys.exit(0)
         else:
             instance, program = \

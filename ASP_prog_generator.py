@@ -1,18 +1,19 @@
 import csv
+import configparser
 import classifier
 
 
-def create_asp_prog(input, constraints):
+def create_asp_prog(input_file, config_file_name):
 
     """
     Function to create ASP program.
 
     Parameters
     ----------
-    input : str
+    input_file : str
         name of input train data file
-    constraints : str
-        name of inputs constraints file
+    config_file_name : str
+        name of constraint file
 
     Returns
     -------
@@ -23,52 +24,50 @@ def create_asp_prog(input, constraints):
 
     """
 
-    FnameCSV = input
-    FnameASP = input.replace(".csv", ".asp")
+    config_file = configparser.ConfigParser()
+    config_file.read(config_file_name)
 
-    ConReader = csv.reader(open(constraints), delimiter=';')
-
-    Constraints = dict((rows[0], rows[1]) for rows in ConReader)
+    FnameCSV = input_file
+    FnameASP = input_file.replace(".csv", ".asp")
 
     GateTypes = []
 
     GateType1 = {
-        "LowerBoundPos": int(Constraints.get("GateType1_LowerBoundPos")),
-        "LowerBoundNeg": int(Constraints.get("GateType1_LowerBoundNeg")),
-        "UpperBoundPos": int(Constraints.get("GateType1_UpperBoundPos")),
-        "UpperBoundNeg": int(Constraints.get("GateType1_UpperBoundNeg")),
-        "UpperBoundOcc": int(Constraints.get("GateType1_UpperBoundOcc"))
+        "LowerBoundPos": int(config_file['GATE SPECIFICATION']['GateType1_LowerBoundPos']),
+        "LowerBoundNeg": int(config_file['GATE SPECIFICATION']['GateType1_LowerBoundNeg']),
+        "UpperBoundPos": int(config_file['GATE SPECIFICATION']['GateType1_UpperBoundPos']),
+        "UpperBoundNeg": int(config_file['GATE SPECIFICATION']['GateType1_UpperBoundNeg']),
+        "UpperBoundOcc": int(config_file['GATE SPECIFICATION']['GateType1_UpperBoundOcc']),
     }
 
     GateType2 = {
-        "LowerBoundPos": int(Constraints.get("GateType2_LowerBoundPos")),
-        "LowerBoundNeg": int(Constraints.get("GateType2_LowerBoundNeg")),
-        "UpperBoundPos": int(Constraints.get("GateType2_UpperBoundPos")),
-        "UpperBoundNeg": int(Constraints.get("GateType2_UpperBoundNeg")),
-        "UpperBoundOcc": int(Constraints.get("GateType2_UpperBoundOcc"))
+        "LowerBoundPos": int(config_file['GATE SPECIFICATION']['GateType2_LowerBoundPos']),
+        "LowerBoundNeg": int(config_file['GATE SPECIFICATION']['GateType2_LowerBoundNeg']),
+        "UpperBoundPos": int(config_file['GATE SPECIFICATION']['GateType2_UpperBoundPos']),
+        "UpperBoundNeg": int(config_file['GATE SPECIFICATION']['GateType2_UpperBoundNeg']),
+        "UpperBoundOcc": int(config_file['GATE SPECIFICATION']['GateType2_UpperBoundOcc']),
     }
 
     GateTypes = [GateType1, GateType2]
 
-    Constraints.get("PerfectClassifier")
-
-    instance, program = classifier.csv2asp(FnameCSV,
-                                           FnameASP,
-                                           int(Constraints.get("LowerBoundInputs")),
-                                           int(Constraints.get("UpperBoundInputs")),
-                                           int(Constraints.get("LowerBoundGates")),
-                                           int(Constraints.get("UpperBoundGates")),
-                                           GateTypes,
-                                           int(Constraints.get("EfficiencyConstraint")),
-                                           int(Constraints.get("OptimizationStrategy")),
-                                           int(Constraints.get("BreakSymmetries")),
-                                           int(Constraints.get("Silent")),
-                                           int(Constraints.get("UniquenessConstraint")),
-                                           int(Constraints.get("BooleanFunctionForm")),
-                                           int(Constraints.get("PerfectClassifier")),
-                                           int(Constraints.get("AddBoundsOnErrors")),
-                                           int(Constraints.get("UpperBoundFalsePos")),
-                                           int(Constraints.get("UpperBoundFalseNeg")))
+    instance, program = \
+        classifier.csv2asp(fname_csv=FnameCSV,
+                           fname_asp=FnameASP,
+                           lower_bound_inputs=int(config_file['CLASSIFIER CONSTRAINTS']['LowerBoundInputs']),
+                           upper_bound_inputs=int(config_file['CLASSIFIER CONSTRAINTS']['UpperBoundInputs']),
+                           lower_bound_gates=int(config_file['CLASSIFIER CONSTRAINTS']['LowerBoundGates']),
+                           upper_bound_gates=int(config_file['CLASSIFIER CONSTRAINTS']['UpperBoundGates']),
+                           gate_types=GateTypes,
+                           efficiency_constraint=config_file.getboolean('OPTIONAL', 'EfficiencyConstraint'),
+                           optimization_strategy=int(config_file['OPTIMIZATION']['OptimizationStrategy']),
+                           break_symmetries=config_file.getboolean('OPTIONAL', 'BreakSymmetries'),
+                           silent=config_file.getboolean('OPTIONAL', 'Silent'),
+                           uniqueness_constraint=config_file.getboolean('CLASSIFIER CONSTRAINTS', 'UniquenessConstraint'),
+                           boolean_function_form=int(config_file['CLASSIFIER CONSTRAINTS']['BooleanFunctionForm']),
+                           perfect_classifier=config_file.getboolean('ERROR CONSTRAINTS', 'PerfectClassifier'),
+                           add_bounds_on_errors=config_file.getboolean('ERROR CONSTRAINTS', 'AddBoundsOnErrors'),
+                           upper_bound_false_pos=int(config_file['ERROR CONSTRAINTS']['UpperBoundFalsePos']),
+                           upper_bound_false_neg=int(config_file['ERROR CONSTRAINTS']['UpperBoundFalseNeg']))
 
     instance = "\n".join(instance)
     program = "\n".join(program)

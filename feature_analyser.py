@@ -45,7 +45,7 @@ def rank_features_by_frequency(solutions, path, file_name):
 
                 features_total += 1
 
-    header = {'feature': [], 'level': [], 'relative frequency': []}
+    header = {'feature': [], 'level': [], 'relative_frequency': []}
     frequency_data = pandas.DataFrame(data=header)
 
     print("\n###FEATURE FREQUENCY ANALYSIS###")
