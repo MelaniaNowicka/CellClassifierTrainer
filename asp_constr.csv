@@ -10,8 +10,8 @@ UniquenessConstraint;0
 BooleanFunctionForm;0
 PerfectClassifier;0
 AddBoundsOnErrors;0
-UpperBoundFalsePos;0
-UpperBoundFalseNeg;0
+UpperBoundFalsePos;1
+UpperBoundFalseNeg;3
 GateType1_LowerBoundPos;0
 GateType1_UpperBoundPos;3
 GateType1_LowerBoundNeg;0

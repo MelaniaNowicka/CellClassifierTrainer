@@ -6,6 +6,7 @@ import time
 import ASP_prog_generator
 import trainer
 import filter
+import evaluator
 
 
 # command line argument parser
@@ -102,14 +103,15 @@ def run_trainer():
         shortest_classifiers = filter.filter_shortest_solutions(solution_list)
         # filter symmetric classifiers (that only differ in order of inputs and gates)
         best_results = filter.filter_symmetric_solutions(shortest_classifiers)
-        # test classifiers on test data
+        # test classifiers on test data if available or show training results
         if test_data is not None and len(list(best_results)) != 0:
-            trainer.test_classifiers(best_results, test_data,
+            evaluator.test_classifiers(best_results, test_data,
                                      train_positives, train_negatives,
                                      test_positives, test_negatives)
+        else:
+            evaluator.test_classifiers(best_results, None, train_positives, train_negatives, 0, 0)
 
     end_train = time.time()
-    training_time = end_train - start_train
     print("TRAINING TIME: ", end_train - start_train)
 
 

@@ -24,13 +24,13 @@ def convert_solution_to_list(inputs):
 
     for i in range(0, len(input_list)):  # iterate over inputs in solution
 
-        if input_list[i][0] == gate_id:  # if the current input's id is still same
+        if input_list[i][0] == gate_id:  # if the current input's gate id is still same
             new_gate.append((input_list[i][2], input_list[i][1]))  # add next input to the gate (feature id, sign)
 
-            if i == len(input_list) - 1:  # if this is the last input
+            if i == len(input_list) - 1:  # if this is the last input in the classifier
                 new_solution.append(sorted(new_gate))  # add last gate to solution
 
-        else:  # if the current input's id is different
+        else:  # if the current input's gate id is different
             new_solution.append(sorted(new_gate))  # add current gate to solution
             new_gate = []  # create new gate
             gate_id = input_list[i][0]  # assign new current gate id
@@ -51,9 +51,10 @@ def convert_asp_results(results):
 
     Format:
 
-    - list of lists: [[feature_id_1, sign_1], [feature_id_2, sign_2]], e.g., [[miR_1, positive], [miR_2, negative]]
+    - list of lists of lists: [[feature_id_1, sign_1], [feature_id_2, sign_2]],
+    e.g., [[[miR_1, positive], [miR_2, positive]], [[miR_3, negative]]
     - string: gate_input(gate_id, feature_id, sign) gate_input(gate_id, feature_id, sign), \
-    e.g., gate_input(1, miR_1, positive) gate_input(1, miR_2, negative)
+    e.g., gate_input(1, miR_1, positive) gate_input(1, miR_2, positive) gate_input(2, miR_2, negative)
 
     Parameters
     ----------
@@ -82,9 +83,9 @@ def convert_asp_results(results):
         # iterate over solutions in result
         for solution in result.solutions_str:
 
-            # iterate over atoms in solution (contains gate id, sign and feature id)
+            # iterate over atoms in solution (contains: gate id, sign and feature id)
             input_list = []
-            for atom in solution:
+            for atom in solution:  # atom[1][0] - gate id, atom[1][1] - sign and atom[1][2]] - feature id
                 input_list.append([str(atom[1][0]), atom[1][1], atom[1][2]])
 
             # sort inputs by gate id and then alphabetically
@@ -108,4 +109,3 @@ def convert_asp_results(results):
         result.size = size  # add size of solutions in single result
 
     return results
-
