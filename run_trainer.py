@@ -108,8 +108,8 @@ def run_trainer():
             evaluator.test_classifiers(best_results, test_data,
                                      train_positives, train_negatives,
                                      test_positives, test_negatives)
-        else:
-            evaluator.test_classifiers(best_results, None, train_positives, train_negatives, 0, 0)
+        # else:
+        # evaluator.test_classifiers(best_results, None, train_positives, train_negatives, 0, 0)
 
     end_train = time.time()
     print("TRAINING TIME: ", end_train - start_train)
