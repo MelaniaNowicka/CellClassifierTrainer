@@ -102,10 +102,10 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
             print("TEST BACC: ", bacc)
             bacc_test_list.append(bacc)
 
-    path_train = test_data
-    head_tail = os.path.split(path_train)
-    path = head_tail[0]
-    file_name = head_tail[1]
+    # path_train = test_data
+    # head_tail = os.path.split(path_train)
+    # path = head_tail[0]
+    # file_name = head_tail[1]
 
     # feature_analyser.rank_features_by_frequency(solutions, path, file_name)  # analyse features
 
