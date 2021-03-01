@@ -1,4 +1,3 @@
-import csv
 import configparser
 import classifier
 

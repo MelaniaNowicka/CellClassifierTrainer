@@ -107,7 +107,7 @@ def test_classifiers(solutions, test_data, train_p, train_n, test_p, test_n):
     path = head_tail[0]
     file_name = head_tail[1]
 
-    feature_analyser.rank_features_by_frequency(solutions, path, file_name)  # analyse features
+    # feature_analyser.rank_features_by_frequency(solutions, path, file_name)  # analyse features
 
     # average results for all solutions
     print("\n\n###################################")
