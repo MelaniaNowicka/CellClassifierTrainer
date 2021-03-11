@@ -103,64 +103,10 @@ Parameters description:
 
 ## ASP constraints
 
-ASP constraints are included in constr.csv file. Explanation of particular constraints:
+ASP constraints are included in asp_constr.ini file. Explanation of particular constraints:
 (to know more see [RnaCancerClassifier](https://github.com/hklarner/RnaCancerClassifier)
-and [Becker et al.](https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full)):
-
-#LowerBoundInputs - lower bound on number of inputs in classifier
-#UpperBoundInputs - upper bound on number of inputs in classifier
-#LowerBoundGates - lower bound on number of gates in classifier
-#UpperBoundGates - upper bound on number of gates in classifier
-#BooleanFunctionForm - 0: Conjunctive Normal Form (CNF), 1: Disjunctive Normal Form (DNF)
-#UniquenessConstraint - if True inputs should be unique across the classifier, irrespective of whether they are negated or not
-[CLASSIFIER CONSTRAINTS]
-
-LowerBoundInputs = 1  
-UpperBoundInputs = 10  
-LowerBoundGates = 1
-UpperBoundGates = 6
-BooleanFunctionForm = 0
-UniquenessConstraint = False
-
-#Gate type specification 
-#Lower and upper bounds on positive and negative inputs in each gate
-[GATE SPECIFICATION]
-GateType1_LowerBoundPos = 0
-GateType1_UpperBoundPos = 3
-GateType1_LowerBoundNeg = 0
-GateType1_UpperBoundNeg = 0
-GateType1_UpperBoundOcc = 2
-GateType2_LowerBoundPos = 0
-GateType2_UpperBoundPos = 0
-GateType2_LowerBoundNeg = 0
-GateType2_UpperBoundNeg = 1
-GateType2_UpperBoundOcc = 4
-
-#OptimizationStrategy
-#0: no optimization
-#1: minimize number of inputs then minimize number of gates
-#2: minimize number of gates then minimize number of inputs
-#3: minimize number of inputs
-#4: minimize number of gates
-[OPTIMIZATION]
-OptimizationStrategy = 1
-
-#EfficiencyConstraint - if True ignore non-relevant features
-#BreakSymmetries - if True part of symmetric solutions are removed
-#Silent - printing option
-[OPTIONAL]
-EfficiencyConstraint = False
-BreakSymmetries = False
-Silent = False
-
-#PerfectClassifier - if True upper bound on false positive and negative errors are 0
-#AddBoundsOnErrors - if True add bounds on errors
-#UpperBoundFalsePos - upper bound on false positive errors (needed if PerfectClassifier=False)
-#UpperBoundFalseNeg - upper bound on false negative errors (needed if PerfectClassifier=False)
-[ERROR CONSTRAINTS]
-PerfectClassifier = False
-AddBoundsOnErrors = False
-UpperBoundFalsePos = 0
-UpperBoundFalseNeg = 0
+and [Becker et al.](https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full)). 
+You may change all the parameters. Description may be found 
+[here](https://github.com/MelaniaNowicka/CellClassifierTrainer/blob/master/asp_constr.ini).
 
 
