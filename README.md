@@ -68,13 +68,13 @@ To download the CellClassifierTrainer from Github, do::
 
 To use CellClassifierTrainer, run::
 
-    $ python -u run_trainer.py --train_data train_dataset.csv --constr asp_constr.csv --test_data test_dataset.csv 
+    $ python -u run_trainer.py --train_data train_dataset.csv --constr asp_constr.ini --test_data test_dataset.csv 
     --train_p 80 --train_n 80 --test_p 20 --test_n 20 --min_fp 0 --min_fn 0 --max_fp 5 --max_fn 5
 
 
 Run exemplary training with a command::
 
-    $ python -u run_trainer.py --train_data example_train.csv --constr asp_constr.csv --test_data example_test.csv 
+    $ python -u run_trainer.py --train_data example_train.csv --constr asp_constr.ini --test_data example_test.csv 
     --train_p 80 --train_n 80 --test_p 20 --test_n 20 --fp 2 --fn 2
 
 Parameters description:
@@ -107,48 +107,60 @@ ASP constraints are included in constr.csv file. Explanation of particular const
 (to know more see [RnaCancerClassifier](https://github.com/hklarner/RnaCancerClassifier)
 and [Becker et al.](https://www.frontiersin.org/articles/10.3389/fbioe.2018.00070/full)):
 
-***LowerBoundInputs*** - lower bound on number of inputs in classifier (int)
+#LowerBoundInputs - lower bound on number of inputs in classifier
+#UpperBoundInputs - upper bound on number of inputs in classifier
+#LowerBoundGates - lower bound on number of gates in classifier
+#UpperBoundGates - upper bound on number of gates in classifier
+#BooleanFunctionForm - 0: Conjunctive Normal Form (CNF), 1: Disjunctive Normal Form (DNF)
+#UniquenessConstraint - if True inputs should be unique across the classifier, irrespective of whether they are negated or not
+[CLASSIFIER CONSTRAINTS]
 
-***UpperBoundInputs*** - upper bound on number of inputs in classifier (int)
+LowerBoundInputs = 1  
+UpperBoundInputs = 10  
+LowerBoundGates = 1
+UpperBoundGates = 6
+BooleanFunctionForm = 0
+UniquenessConstraint = False
 
-***LowerBoundGates*** - lower bound on number of gates in classifier (int)
+#Gate type specification 
+#Lower and upper bounds on positive and negative inputs in each gate
+[GATE SPECIFICATION]
+GateType1_LowerBoundPos = 0
+GateType1_UpperBoundPos = 3
+GateType1_LowerBoundNeg = 0
+GateType1_UpperBoundNeg = 0
+GateType1_UpperBoundOcc = 2
+GateType2_LowerBoundPos = 0
+GateType2_UpperBoundPos = 0
+GateType2_LowerBoundNeg = 0
+GateType2_UpperBoundNeg = 1
+GateType2_UpperBoundOcc = 4
 
-***UpperBoundGates*** - upper bound on number of gates in classifier (int)
+#OptimizationStrategy
+#0: no optimization
+#1: minimize number of inputs then minimize number of gates
+#2: minimize number of gates then minimize number of inputs
+#3: minimize number of inputs
+#4: minimize number of gates
+[OPTIMIZATION]
+OptimizationStrategy = 1
 
-***EfficiencyConstraint*** - if 1 ignore non-relevant features, otherwise 0
+#EfficiencyConstraint - if True ignore non-relevant features
+#BreakSymmetries - if True part of symmetric solutions are removed
+#Silent - printing option
+[OPTIONAL]
+EfficiencyConstraint = False
+BreakSymmetries = False
+Silent = False
 
-***BreakSymmetries*** - if 1 part of symmetric solutions are removed, otherwise 0
+#PerfectClassifier - if True upper bound on false positive and negative errors are 0
+#AddBoundsOnErrors - if True add bounds on errors
+#UpperBoundFalsePos - upper bound on false positive errors (needed if PerfectClassifier=False)
+#UpperBoundFalseNeg - upper bound on false negative errors (needed if PerfectClassifier=False)
+[ERROR CONSTRAINTS]
+PerfectClassifier = False
+AddBoundsOnErrors = False
+UpperBoundFalsePos = 0
+UpperBoundFalseNeg = 0
 
-***Silent*** - if 1 print all information, otherwise 0
-
-***UniquenessConstraint*** - if 1 inputs should be unique across the classifier, irrespective of whether they are negated or not, otherwise 0
-
-***BooleanFunction*** 
-* 0 - Conjunctive Normal Form (CNF)
-* 1 - Disjunctive Normal Form (DNF)
-
-***OptimizationStrategy***
-* 0 - no optimization
-* 1 - minimize number of inputs then minimize number of gates
-* 2 - minimize number of gates then minimize number of inputs
-* 3 - minimize number of inputs
-* 4 - minimize number of gates
-
-***PerfectClassifier*** - if 1 look for perfect classifiers (no errors allowed), otherwise 0
-
-***AddBoundsOnErrors*** - if 1 add bounds on errors, otherwise 0
-
-***UpperBoundFalsePos*** - upper bound on false positive errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
-
-***UpperBoundFalseNeg*** - upper bound on false negative errors (needed if PerfectClassifier=0 and AddBoundsOnErrors=0)
-
-***GateTypeX_LowerBoundPos*** - lower bound on positive inputs in gate type X (X - number of gate type (1, 2, 3...))
-
-***GateTypeX_UpperBoundPos*** - upper bound on positive input in gate type X
-
-***GateTypeX_LowerBoundNeg*** - lower bound on negative inputs in gate type X
-
-***GateTypeX_UpperBoundNeg*** - upper bound on negative input in gate type X
-
-***GateTypeX_UpperBoundOcc*** - upper bound on number of occurrences of gate type X
 
