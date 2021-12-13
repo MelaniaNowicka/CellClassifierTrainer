@@ -61,7 +61,7 @@ def optimize_rules(instance, program, fp_max, fn_max):
 
     print("\n")
     print("RULE LIST\n")
-    header = ["ID", "size", "feature1", "sign1", "feature2", "sign2"]
+    header = ["ID", "size", "feature1", "sign1", "feature2", "sign2", "gate"]
     print(";".join(header))
 
     if len(solutions) != 0:
@@ -75,6 +75,10 @@ def optimize_rules(instance, program, fp_max, fn_max):
                 for input in gate:
                     row.append(input[0])
                     row.append(input[1])
+                if len(gate) == 2 and gate[0][1] == 'positive' and gate[1][1] == 'positive':
+                    row.append('0')
+                else:
+                    row.append('1')
 
             print(";".join(row))
     else:
