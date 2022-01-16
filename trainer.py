@@ -1,5 +1,6 @@
 import converter
 from clyngor import solve
+import time
 
 
 # class for result of ASP computation
@@ -38,7 +39,7 @@ class Result:
 
 
 # training classifiers according to asp_program and max values of false positives and false negatives
-def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
+def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max, max_time, start_train):
 
     """
     Trains classifiers according to constraints relaxation described in Becker et al. [1]_
@@ -103,10 +104,24 @@ def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
                     solutions.append(list(answer)[0])  # ad solutions to solution list
 
             if len(solutions) != 0:  # if solutions were found
-                print("Solutions found for: FP: ", i, " FN: ", j, " SUM:", i + j)
+                print("\nSolutions found for: FP: ", i, " FN: ", j, " SUM:", i + j)
                 new_result = Result(solutions, [], i+j, i, j, 0)  # create new result
+                # convert asp results to string and lists
+                new_result_readable = converter.convert_asp_results([new_result])[0]
+                for solution in new_result_readable.solutions_str:
+                    print(solution)
+                returned_results.append(new_result_readable)  # note, one result may contain several solutions!
                 errors.append(i+j)  # add total number of errors to list of errors
-                returned_results.append(new_result)  # note, one result may contain several solutions!
+
+            # check current time
+            current_time = time.time()
+            elapsed_time = current_time - start_train
+            if elapsed_time >= max_time:
+                print("\nTIME WARNING: Time of computation exceeded ", max_time, " seconds.")
+                break
+        else:
+            continue
+        break
 
     print("\nCollecting answers finished.")
 
@@ -115,6 +130,6 @@ def train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max):
         print("NO SOLUTIONS FOUND")
 
     # convert asp results to string and lists
-    returned_results = converter.convert_asp_results(returned_results)
+    # returned_results = converter.convert_asp_results(returned_results)
 
     return errors, returned_results

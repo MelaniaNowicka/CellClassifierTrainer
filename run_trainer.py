@@ -36,6 +36,8 @@ def arg_parser():
                         help='Number of positive samples in test data.')
     parser.add_argument('--test_n', dest='test_n', type=int, default=None,
                         help='Number of negative samples in test data.')
+    parser.add_argument('--max_time', dest='max_time', type=int, default=None,
+                        help='Maximal time in seconds.')
     parser.add_argument('--min_fp', dest='fp_min', type=int, default=0, help='Lower bound on false positives.')
     parser.add_argument('--min_fn', dest='fn_min', type=int, default=0, help='Lower bound on false negatives.')
     parser.add_argument('--max_fp', dest='fp_max', type=int, default=0, help='Upper bound on false positives.')
@@ -72,6 +74,7 @@ def run_trainer():
             instance, program = \
                 ASP_prog_generator.create_asp_prog(params.train_data, params.constr)  # generate ASP program
         test_data = params.test_data  # test data set
+        max_time = params.max_time
         fp_min = params.fp_min  # lower bound on false positives allowed in training
         fn_min = params.fn_min  # lower bound on false negatives allowed in training
         fp_max = params.fp_max  # upper bound on false positives allowed in training
@@ -96,7 +99,8 @@ def run_trainer():
         print("Max FN: ", params.fn_max)
 
         # train classifiers
-        errors, found_solutions = trainer.train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max)
+        errors, found_solutions = \
+            trainer.train_classifiers(instance, program, fp_min, fn_min, fp_max, fn_max, max_time, start_train)
         # filter best found solutions by total number of errors
         solution_list = filter.filter_best_solutions(errors, found_solutions)
         # filter shortest classifiers
